@@ -24,13 +24,16 @@
     .filter{cursor:pointer;border:1px solid #dce4f5;background:white;color:#52627f;border-radius:99px;padding:10px 17px;font-weight:750}
     .filter:hover,.filter:focus-visible{border-color:#6484d5;outline:2px solid transparent}
     .filter.active{background:#4567d1;color:white;border-color:#4567d1}
-    .cards{display:grid;grid-template-columns:minmax(0,540px);gap:20px;padding-bottom:64px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding-bottom:64px}
     .card{background:#fff;border:1px solid #e4eaf5;border-radius:23px;overflow:hidden;box-shadow:0 9px 26px rgba(42,67,115,.06);display:flex;flex-direction:column}
     .art{height:190px;display:grid;place-items:center;position:relative;overflow:hidden}
     .art.math{background:linear-gradient(135deg,#e5edff,#e9e2ff)}
+    .art.signs{background:linear-gradient(135deg,#fff0db,#ffe6ee)}
     .art.future{background:linear-gradient(135deg,#fff2db,#ffe5ec)}
     .mini-grid{display:grid;grid-template-columns:repeat(3,53px);gap:7px;transform:rotate(-7deg)}
     .mini-grid span{display:grid;place-items:center;height:53px;background:#fff;border:2px solid #a6b7ee;border-radius:12px;color:#344eab;font-size:1.5rem;font-weight:900;box-shadow:0 4px 8px #8195d02a}
+    .sign-example{display:flex;align-items:center;justify-content:center;gap:8px;transform:rotate(-4deg);font-weight:900;color:#8e4775;font-size:clamp(1.25rem,3vw,2rem)}
+    .sign-example .missing{display:grid;place-items:center;width:45px;height:49px;background:#fff;border:2px solid #df9cbd;border-radius:12px;color:#b35d90;box-shadow:0 4px 8px #b76e9620}
     .future-icon{font-size:5rem;transform:rotate(-10deg)}
     .card-body{padding:23px;display:flex;flex-direction:column;flex:1;gap:12px}
     .tag{font-size:.76rem;font-weight:850;color:#5269b2;background:#edf2ff;padding:6px 11px;border-radius:99px;align-self:flex-start}
@@ -40,6 +43,7 @@
     .action:hover{background:#3455bf}.action.disabled{background:#edf0f7;color:#8390a8;cursor:default}
     .empty{display:none;background:white;border:1px dashed #cbd5e9;border-radius:16px;padding:26px;color:#67758e}
     footer{border-top:1px solid #e1e8f5;text-align:center;padding:24px 0 34px;color:#7a869b;font-size:.9rem}
+    @media(max-width:700px){.cards{grid-template-columns:minmax(0,1fr)}}
     @media(max-width:550px){.top small{display:none}.hero{padding:42px 0 28px}.section-head{display:block}.hint{display:block;margin-top:6px}.art{height:170px}}
   </style>
 </head>
@@ -52,11 +56,15 @@
       <p>Rinkis žaidimą, išbandyk savo jėgas ir atrask, kiek daug gali išmokti!</p>
     </section>
     <section aria-labelledby="games-title">
-      <div class="section-head"><h2 id="games-title">🧩 Žaidimų erdvė</h2><span class="hint">Netrukus – daugiau matematikos žaidimų</span></div>
+      <div class="section-head"><h2 id="games-title">🧩 Žaidimų erdvė</h2><span class="hint">Rinkis matematikos galvosūkį!</span></div>
       <div class="cards" id="cards">
         <article class="card" data-category="matematika">
           <div class="art math" aria-hidden="true"><div class="mini-grid"><span>8</span><span>1</span><span>6</span><span>3</span><span>5</span><span>7</span><span>4</span><span>9</span><span>2</span></div></div>
           <div class="card-body"><span class="tag">🔢 Matematika</span><h3>Įdomieji kvadratai ir trikampiai</h3><p>Įrašyk trūkstamus skaičius, atrask bendrą sumą ir įveik skaičių galvosūkius!</p><a class="action" href="zaidimai/kvadratai-trikampiai/">🎮 Žaisti</a></div>
+        </article>
+        <article class="card" data-category="matematika">
+          <div class="art signs" aria-hidden="true"><div class="sign-example"><span>17</span><span class="missing">?</span><span>21</span><span class="missing">?</span><span>9</span><span>= 29</span></div></div>
+          <div class="card-body"><span class="tag">➕ Matematika</span><h3>Pabėgę veiksmų ženklai</h3><p>Surask dingusius sudėties ir atimties ženklus, kad lygybė būtų teisinga!</p><a class="action" href="zaidimai/pabege-veiksmu-zenklai/">🎮 Žaisti</a></div>
         </article>
       </div>
     </section>
