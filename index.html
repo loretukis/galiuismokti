@@ -24,7 +24,7 @@
     .filter{cursor:pointer;border:1px solid #dce4f5;background:white;color:#52627f;border-radius:99px;padding:10px 17px;font-weight:750}
     .filter:hover,.filter:focus-visible{border-color:#6484d5;outline:2px solid transparent}
     .filter.active{background:#4567d1;color:white;border-color:#4567d1}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:20px;padding-bottom:64px}
+    .cards{display:grid;grid-template-columns:minmax(0,540px);gap:20px;padding-bottom:64px}
     .card{background:#fff;border:1px solid #e4eaf5;border-radius:23px;overflow:hidden;box-shadow:0 9px 26px rgba(42,67,115,.06);display:flex;flex-direction:column}
     .art{height:190px;display:grid;place-items:center;position:relative;overflow:hidden}
     .art.math{background:linear-gradient(135deg,#e5edff,#e9e2ff)}
@@ -52,38 +52,18 @@
       <p>Rinkis žaidimą, išbandyk savo jėgas ir atrask, kiek daug gali išmokti!</p>
     </section>
     <section aria-labelledby="games-title">
-      <div class="section-head"><h2 id="games-title">🧩 Žaidimų erdvė</h2><span class="hint">Nauji žaidimai atsiras čia</span></div>
-      <div class="filters" role="group" aria-label="Žaidimų kategorijos">
-        <button class="filter active" type="button" data-filter="visi" aria-pressed="true">Visi žaidimai</button>
-        <button class="filter" type="button" data-filter="matematika" aria-pressed="false">🔢 Matematika</button>
-        <button class="filter" type="button" data-filter="lietuviu" aria-pressed="false">📖 Lietuvių kalba</button>
-        <button class="filter" type="button" data-filter="pazinimas" aria-pressed="false">🌍 Pasaulio pažinimas</button>
-      </div>
+      <div class="section-head"><h2 id="games-title">🧩 Žaidimų erdvė</h2><span class="hint">Netrukus – daugiau matematikos žaidimų</span></div>
       <div class="cards" id="cards">
         <article class="card" data-category="matematika">
           <div class="art math" aria-hidden="true"><div class="mini-grid"><span>8</span><span>1</span><span>6</span><span>3</span><span>5</span><span>7</span><span>4</span><span>9</span><span>2</span></div></div>
           <div class="card-body"><span class="tag">🔢 Matematika</span><h3>Įdomieji kvadratai ir trikampiai</h3><p>Įrašyk trūkstamus skaičius, atrask bendrą sumą ir įveik skaičių galvosūkius!</p><a class="action" href="zaidimai/kvadratai-trikampiai/">🎮 Žaisti</a></div>
         </article>
-        <article class="card" data-category="lietuviu">
-          <div class="art future" aria-hidden="true"><div class="future-icon">🔤</div></div>
-          <div class="card-body"><span class="tag">📖 Lietuvių kalba</span><h3>Čia atsiras naujas žaidimas</h3><p>Ruošiame vietą būsimoms žodžių, raidžių ir kalbos užduotims.</p><span class="action disabled">Netrukus</span></div>
-        </article>
       </div>
-      <p class="empty" id="empty" role="status">Šioje kategorijoje žaidimų dar nėra. Užsuk vėliau! 🌟</p>
     </section>
   </main>
   <footer><div class="wrap">© <span id="year"></span> Galiu išmokti! · Bandau. Atrandu. Tobulėju.</div></footer>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    const filters = document.querySelectorAll('.filter');
-    const cards = document.querySelectorAll('.card');
-    filters.forEach(button => button.addEventListener('click', () => {
-      const selected = button.dataset.filter;
-      filters.forEach(item => {const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
-      let visible=0;
-      cards.forEach(card => {const show=selected==='visi'||card.dataset.category===selected;card.hidden=!show;card.style.display=show?'flex':'none';if(show)visible++;});
-      document.getElementById('empty').style.display=visible?'none':'block';
-    }));
   </script>
 </body>
 </html>
