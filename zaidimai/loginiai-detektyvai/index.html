@@ -85,14 +85,25 @@
 .site-heading .top .sub{margin:4px 0 0}
 .site-heading .top h1{font-size:clamp(27px,3vw,40px);white-space:nowrap;line-height:1.12}
 @media(max-width:760px){.site-heading{flex-wrap:wrap;gap:12px}.site-heading > .top{flex-basis:100%}.site-heading .top h1{white-space:normal}}
+/* V12: aiškus rezultatas šalia tikrinimo mygtuko */
+.result-indicator{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:12px 8px;border-radius:16px;text-align:center;border:2px solid transparent}
+.result-indicator.visible{display:flex}
+.result-indicator .face{font-size:56px;line-height:1.1}
+.result-indicator .result-title{font-size:17px;font-weight:850}
+.result-indicator.good{background:#e2f7e9;color:#146d3b;border-color:#9dd9b9}
+.result-indicator.bad{background:#fff3df;color:#8b5810;border-color:#f0d6a6}
+.gridarea>.actions{align-self:start}
+.gridarea>.actions .feedback{margin-top:2px;font-size:15px;line-height:1.45}
+@media(min-width:1101px){.gridarea>.feedback{grid-column:auto;grid-row:auto}.gridarea>.actions{grid-row:3 / span 2}}
+@media(max-width:1100px){.gridarea>.actions{align-items:stretch}.gridarea>.actions .feedback{flex-basis:100%;width:100%}.gridarea>.actions .result-indicator{flex-basis:100%;width:100%}}
 </style>
 </head>
 <body><main class="wrap">
 <div class="site-heading"><nav class="site-nav"><a class="home-link" href="https://galiuismokti.lt/">⌂ Į pagrindinį puslapį</a></nav>
 <header class="top"><span class="logo" aria-hidden="true">✨🕵️</span><div><h1>Loginiai detektyvai</h1><p class="sub">Skaityk, mąstyk, atrask! · Galiu išmokti!</p></div></header></div><div class="layout"><div class="leftcol"><div class="toolbar"><label>Sunkumo lygis<select id="level"><option value="0">1 · Pradedantysis (1 kl.)</option><option value="1">2 · Smalsuolis (2 kl.)</option><option value="2">3 · Gudruolis (3 kl.)</option><option value="3">4 · Meistras (4 kl.)</option></select></label><button class="btn" id="new">🎲 Naujas galvosūkis</button></div>
 <section class="panel story"><span class="tag" id="levelTag"></span><h2 id="storyTitle" style="margin-top:12px"></h2><p id="storyText"></p><h3>🔍 Užuominos</h3><ol class="clues" id="clues"></ol><div class="help"><strong>Kaip žaisti?</strong><p style="margin:7px 0 0">Lentelėje susiek du dalykus. Paspausk langelį vieną kartą – <b>✓ tinka</b>, antrą – <b>× netinka</b>, trečią – vėl tuščia. Kiekvienas veikėjas turi po vieną skirtingą daiktą iš kiekvienos grupės.</p></div></section></div>
-<section class="panel gridarea"><h2>🧩 Detektyvo lentelės</h2><p class="small">Žalia ✓ – tikrai tinka. Raudona × – netinka. Visa informacija vienoje L formos lentelėje. Telefone lentelę slink į šoną.</p><div class="grids" id="grids"></div><div class="stat" id="progress"></div><div class="actions"><button class="btn" id="check">✓ Patikrinti</button><button class="btn light" id="hint">💡 Pagalba</button><button class="btn secondary" id="clear">↺ Išvalyti lenteles</button></div><div class="feedback" id="feedback" role="status" aria-live="polite">Pradėk nuo pirmos užuominos!</div></section></div>
-<p class="footer">Bandomoji žaidimo versija 11 · Veikia ir be interneto · Galvosūkiai tikrinami, kad turėtų vienintelį sprendimą.</p>
+<section class="panel gridarea"><h2>🧩 Detektyvo lentelės</h2><p class="small">Žalia ✓ – tikrai tinka. Raudona × – netinka. Visa informacija vienoje L formos lentelėje. Telefone lentelę slink į šoną.</p><div class="grids" id="grids"></div><div class="stat" id="progress"></div><div class="actions"><button class="btn" id="check">✓ Patikrinti</button><div class="result-indicator" id="resultIndicator" role="status" aria-live="polite"><span class="face" id="resultFace" aria-hidden="true"></span><span class="result-title" id="resultTitle"></span></div><button class="btn light" id="hint">💡 Pagalba</button><button class="btn secondary" id="clear">↺ Išvalyti lenteles</button><div class="feedback" id="feedback" role="status" aria-live="polite">Pradėk nuo pirmos užuominos!</div></div></section></div>
+<p class="footer">Bandomoji žaidimo versija 12 · Veikia ir be interneto · Galvosūkiai tikrinami, kad turėtų vienintelį sprendimą.</p>
 </main>
 <script>
 'use strict';
@@ -173,7 +184,7 @@ function render(){
     else{
      const btn=document.createElement('button');btn.type='button';btn.className='cell';btn.dataset.key=key(Math.min(a===0?0:p.k-a+1,b),Math.max(a===0?0:p.k-a+1,b),...(a===0?[i,j]:[j,i]));
      btn.setAttribute('aria-label',p.groups[a===0?0:p.k-a+1][i]+' ir '+p.groups[b][j]);
-     btn.onclick=()=>{let id=btn.dataset.key;marks[id]=marks[id]==='yes'?'no':marks[id]==='no'?'':'yes';solved=false;updateCells();message('Toliau nagrinėk užuominas arba patikrink atsakymus.','')};
+     btn.onclick=()=>{let id=btn.dataset.key;marks[id]=marks[id]==='yes'?'no':marks[id]==='no'?'':'yes';solved=false;updateCells();hideResult();message('Toliau nagrinėk užuominas arba patikrink atsakymus.','')};
      td.append(btn)
     }
     tr.append(td)
@@ -184,9 +195,11 @@ function render(){
  table.append(tbody);root.append(table);updateCells()
 }
 function updateCells(){document.querySelectorAll('.cell').forEach(btn=>{let v=marks[btn.dataset.key]||'';btn.className='cell'+(v?' '+v:'');btn.textContent=v==='yes'?'✓':v==='no'?'×':''});let p=puzzle,yes=Object.values(marks).filter(x=>x==='yes').length,total=p.n*p.k*(p.k+1)/2;$('progress').textContent=`Pažymėta ✓: ${yes} iš ${total} · Pagalbos kartai: ${hintCount}`}
+function showResult(ok){const el=$('resultIndicator');el.className='result-indicator visible '+(ok?'good':'bad');$('resultFace').textContent=ok?'🥳':'🤔';$('resultTitle').textContent=ok?'Puikiai! Viskas teisinga!':'Reikia pasitaisyti!'}
+function hideResult(){ $('resultIndicator').className='result-indicator';$('resultFace').textContent='';$('resultTitle').textContent=''}
 function message(t,cls){$('feedback').className='feedback'+(cls?' '+cls:'');$('feedback').textContent=t}
-function check(){let p=puzzle,wrong=0,missing=0;for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++){let m=marks[key(a,b,i,j)],c=correct(a,b,i,j);if((m==='yes'&&!c)||(m==='no'&&c))wrong++;if(c&&m!=='yes')missing++}if(!wrong&&!missing){solved=true;message('🎉 Puiku! Galvosūkis išspręstas! Spausk „🎲 Naujas galvosūkis“ ir gausi kitą istoriją arba naujas užuominas.','good')}else message(`Dar yra ką patikrinti. Klaidingi ženklai: ${wrong}. Trūksta teisingų ✓: ${missing}.`,'bad')}
-function hint(){let p=puzzle,options=[];for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++)if(correct(a,b,i,j)&&marks[key(a,b,i,j)]!=='yes')options.push({a,b,i,j});if(!options.length){message('Visi teisingi ✓ jau pažymėti!','good');return}let x=shuffle(options)[0];marks[key(x.a,x.b,x.i,x.j)]='yes';hintCount++;updateCells();message(`💡 Pagalba: „${p.groups[x.a][x.i]}“ dera su „${p.groups[x.b][x.j]}“. Pažymėjau ✓.`,'')}
-function start(){marks={};hintCount=0;solved=false;let next=create(),attempts=0;while(next.signature===lastSignature&&attempts++<4)next=create();puzzle=next;lastSignature=next.signature;render();message('Naujas galvosūkis paruoštas. Pradėk nuo pirmos užuominos!','')}
-$('new').addEventListener('click',start);$('level').addEventListener('change',start);$('check').addEventListener('click',check);$('hint').addEventListener('click',hint);$('clear').addEventListener('click',()=>{marks={};solved=false;updateCells();message('Lentelės išvalytos. Gali bandyti iš naujo.','')});start();
+function check(){let p=puzzle,wrong=0,missing=0;for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++){let m=marks[key(a,b,i,j)],c=correct(a,b,i,j);if((m==='yes'&&!c)||(m==='no'&&c))wrong++;if(c&&m!=='yes')missing++}showResult(!wrong&&!missing);if(!wrong&&!missing){solved=true;message('🎉 Puiku! Galvosūkis išspręstas! Spausk „🎲 Naujas galvosūkis“ ir gausi kitą istoriją arba naujas užuominas.','good')}else message(`Dar yra ką patikrinti. Klaidingi ženklai: ${wrong}. Trūksta teisingų ✓: ${missing}.`,'bad')}
+function hint(){let p=puzzle,options=[];for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++)if(correct(a,b,i,j)&&marks[key(a,b,i,j)]!=='yes')options.push({a,b,i,j});if(!options.length){message('Visi teisingi ✓ jau pažymėti!','good');return}let x=shuffle(options)[0];marks[key(x.a,x.b,x.i,x.j)]='yes';hintCount++;updateCells();hideResult();message(`💡 Pagalba: „${p.groups[x.a][x.i]}“ dera su „${p.groups[x.b][x.j]}“. Pažymėjau ✓.`,'')}
+function start(){hideResult();marks={};hintCount=0;solved=false;let next=create(),attempts=0;while(next.signature===lastSignature&&attempts++<4)next=create();puzzle=next;lastSignature=next.signature;render();message('Naujas galvosūkis paruoštas. Pradėk nuo pirmos užuominos!','')}
+$('new').addEventListener('click',start);$('level').addEventListener('change',start);$('check').addEventListener('click',check);$('hint').addEventListener('click',hint);$('clear').addEventListener('click',()=>{marks={};solved=false;updateCells();hideResult();message('Lentelės išvalytos. Gali bandyti iš naujo.','')});start();
 </script></body></html>
