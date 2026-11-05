@@ -101,7 +101,7 @@
 <body><main class="wrap">
 <div class="site-heading"><nav class="site-nav"><a class="home-link" href="https://galiuismokti.lt/">⌂ Į pagrindinį puslapį</a></nav>
 <header class="top"><span class="logo" aria-hidden="true">✨🕵️</span><div><h1>Loginiai detektyvai</h1><p class="sub">Skaityk, mąstyk, atrask! · Galiu išmokti!</p></div></header></div><div class="layout"><div class="leftcol"><div class="toolbar"><label>Sunkumo lygis<select id="level"><option value="0">1 · Pradedantysis (1 kl.)</option><option value="1">2 · Smalsuolis (2 kl.)</option><option value="2">3 · Gudruolis (3 kl.)</option><option value="3">4 · Meistras (4 kl.)</option></select></label><button class="btn" id="new">🎲 Naujas galvosūkis</button></div>
-<section class="panel story"><span class="tag" id="levelTag"></span><h2 id="storyTitle" style="margin-top:12px"></h2><p id="storyText"></p><h3>🔍 Užuominos</h3><ol class="clues" id="clues"></ol><div class="help"><strong>Kaip žaisti?</strong><p style="margin:7px 0 0">Lentelėje susiek du dalykus. Paspausk langelį vieną kartą – <b>✓ tinka</b>, antrą – <b>× netinka</b>, trečią – vėl tuščia. Kiekvienas veikėjas turi po vieną skirtingą daiktą iš kiekvienos grupės.</p></div></section></div>
+<section class="panel story"><span class="tag" id="levelTag"></span><h2 id="storyTitle" style="margin-top:12px"></h2><p id="storyText"></p><h3>🔍 Užuominos</h3><ol class="clues" id="clues"></ol><div class="help"><strong>Kaip žaisti?</strong><p style="margin:7px 0 0">Lentelėje susiek du dalykus. Paspausk langelį vieną kartą – <b>✓ tinka</b>, antrą – <b>× netinka</b>, trečią – vėl tuščia. Kiekvienas veikėjas susiejamas su vienu skirtingu pasirinkimu iš kiekvienos kategorijos.</p></div></section></div>
 <section class="panel gridarea"><h2>🧩 Detektyvo lentelės</h2><p class="small">Žalia ✓ – tikrai tinka. Raudona × – netinka. Visa informacija vienoje L formos lentelėje. Telefone lentelę slink į šoną.</p><div class="grids" id="grids"></div><div class="stat" id="progress"></div><div class="actions"><button class="btn" id="check">✓ Patikrinti</button><div class="result-indicator" id="resultIndicator" role="status" aria-live="polite"><span class="face" id="resultFace" aria-hidden="true"></span><span class="result-title" id="resultTitle"></span></div><button class="btn light" id="hint">💡 Pagalba</button><button class="btn secondary" id="clear">↺ Išvalyti lenteles</button><div class="feedback" id="feedback" role="status" aria-live="polite">Pradėk nuo pirmos užuominos!</div></div></section></div>
 <p class="footer">Bandomoji žaidimo versija 12 · Veikia ir be interneto · Galvosūkiai tikrinami, kad turėtų vienintelį sprendimą.</p>
 </main>
@@ -125,15 +125,70 @@ let puzzle,marks={},hintCount=0,lastSignature='',solved=false;
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function perms(a){if(a.length===1)return [a];return a.flatMap((x,i)=>perms(a.filter((_,j)=>i!==j)).map(p=>[x,...p]))}
 const cache={};function worlds(n,k){let key=n+'-'+k;if(cache[key])return cache[key];let p=perms(Array.from({length:n},(_,i)=>i)),out=[[]];for(let j=0;j<k;j++)out=out.flatMap(w=>p.map(q=>[...w,q]));return cache[key]=out}
+// Neiginiams naudojamos atskiros linksnių formos, o ne automatinis priešdėlis „ne“.
+const genitiveForms={
+'lapę':'lapės','ežį':'ežio','kiškį':'kiškio','voverę':'voverės','briedį':'briedžio',
+'knygą':'knygos','kompasą':'kompaso','žibintuvėlį':'žibintuvėlio','užrašinę':'užrašinės','fotoaparatą':'fotoaparato',
+'knygą apie kosmosą':'knygos apie kosmosą','pasakų knygą':'pasakų knygos','knygą apie dinozaurus':'knygos apie dinozaurus','eilėraščių knygą':'eilėraščių knygos','knygą apie jūrą':'knygos apie jūrą',
+'pieštuką':'pieštuko','liniuotę':'liniuotės','skirtuką':'skirtuko','kuprinę':'kuprinės',
+'obuolį':'obuolio','sausainį':'sausainio','bandelę':'bandelės','kriaušę':'kriaušės','riestainį':'riestainio',
+'atviruką':'atviruko','ženkliuką':'ženkliuko','piešinį':'piešinio','magnetuką':'magnetuko','pakabuką':'pakabuko',
+'raudoną':'raudonos','žalią':'žalios','geltoną':'geltonos','mėlyną':'mėlynos','violetinę':'violetinės',
+'katę':'katės','šunį':'šuns','triušį':'triušio','žiurkėną':'žiurkėno','jūrų kiaulytę':'jūrų kiaulytės',
+'antklodę':'antklodės','žaislą':'žaislo','dubens rinkinį':'dubens rinkinio','kamuoliuką':'kamuoliuko','guolį':'guolio',
+'važinėjimą dviračiu':'važinėjimo dviračiu','piešimą':'piešimo','žaidimą kamuoliu':'žaidimo kamuoliu','bėgimą':'bėgimo','aitvaro leidimą':'aitvaro leidimo',
+'kamuolį':'kamuolio','aitvarą':'aitvaro','vandens gertuvę':'vandens gertuvės','kepurę':'kepurės',
+'Marsą':'Marso','Venerą':'Veneros','Jupiterį':'Jupiterio','Saturną':'Saturno','Neptūną':'Neptūno',
+'teleskopą':'teleskopo','radiją':'radijo','kompiuterį':'kompiuterio','žemėlapį':'žemėlapio',
+'žvaigždę':'žvaigždės','raketą':'raketos','mėnulį':'mėnulio','kometą':'kometos','saulę':'saulės',
+'gulbę':'gulbės','zylę':'zylės','genį':'genio','gandrą':'gandro','antį':'anties',
+'žiūronus':'žiūronų','monetą':'monetos','žiedą':'žiedo','raktą':'rakto','medalį':'medalio','akmenėlį':'akmenėlio',
+'kastuvėlį':'kastuvėlio','didinamąjį stiklą':'didinamojo stiklo',
+'kardą':'kardo','lazdelę':'lazdelės','karūną':'karūnos','skrybėlę':'skrybėlės','skydą':'skydo',
+'robotą':'roboto','skraidantį dviratį':'skraidančio dviračio','stebuklingą kuprinę':'stebuklingos kuprinės','kalbantį laikrodį':'kalbančio laikrodžio','saulės automobilį':'saulės automobilio',
+'plakatą':'plakato','modelį':'modelio','vaizdo įrašą':'vaizdo įrašo','nuotrauką':'nuotraukos'
+};
+const negVerbs={'sutiko':'nesutiko','turėjo':'neturėjo','skaitė':'neskaitė','nusipirko':'nenusipirko','išsirinko':'neišsirinko','pasirinko':'nepasirinko','glostė':'neglostė','atnešė':'neatnešė','atsinešė':'neatsinešė','tyrinėjo':'netyrinėjo','pasiėmė':'nepasiėmė','nupiešė':'nenupiešė','stebėjo':'nestebėjo','rado':'nerado','parodė':'neparodė','sukūrė':'nesukūrė','persirengė':'nepersirengė'};
+const negActivities={'piešė':'nepiešė','skaitė':'neskaitė','dainavo':'nedainavo','fotografavo':'nefotografavo','tvarkė':'netvarkė'};
 function phrase(cat,i){return cat.standalone?cat.items[i]:cat.verb+' '+cat.items[i]+(cat.suffix||'')}
 function sentence(name,cat,i){return name+' '+phrase(cat,i)+'.'}
+function negativeSentence(name,cat,i){
+ const item=cat.items[i];
+ if(cat.standalone)return name+' '+(negActivities[item]||'ne'+item)+'.';
+ // Vietą nurodantys prielinksniai ir įnagininkas nekeičiami.
+ if(['buvo','sėdėjo','stovėjo','paliko lobį','pristatė išradimą'].includes(cat.verb)){
+  const verbs={'buvo':'nebuvo','sėdėjo':'nesėdėjo','stovėjo':'nestovėjo','paliko lobį':'nepaliko lobio','pristatė išradimą':'nepristatė išradimo'};
+  return name+' '+verbs[cat.verb]+' '+item+'.';
+ }
+ if(cat.verb==='persirengė')return name+' nepersirengė '+item+'.';
+ const gen=genitiveForms[item];
+ if(!gen)throw new Error('Trūksta kilmininko formos: '+item);
+ return name+' '+(negVerbs[cat.verb]||'ne'+cat.verb)+' '+gen+(cat.suffix===' spalvą'?' spalvos':'')+'.';
+}
 function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+// Aprašymas visada sudaromas iš TIKRAI pasirinkto galvosūkio kategorijų.
+const categoryDescriptions={
+'Sutiktas gyvūnas':'sutiko skirtingą gyvūną','Turimas daiktas':'turėjo skirtingą daiktą','Rasta vieta':'aplankė skirtingą vietą',
+'Knyga':'skaitė skirtingą knygą','Vieta':'buvo skirtingoje vietoje','Daiktas':'turėjo skirtingą daiktą',
+'Skanėstas':'nusipirko skirtingą skanėstą','Dovana':'pasirinko skirtingą dovaną','Spalva':'pasirinko skirtingą spalvą',
+'Gyvūnas':'sutiko skirtingą gyvūną','Veikla':'užsiėmė skirtinga veikla',
+'Planeta':'tyrinėjo skirtingą planetą','Prietaisas':'turėjo skirtingą prietaisą','Ženklas':'nupiešė skirtingą ženklą',
+'Paukštis':'stebėjo skirtingą paukštį','Priemonė':'naudojo skirtingą priemonę',
+'Lobis':'rado skirtingą lobį','Įrankis':'naudojosi skirtingu įrankiu',
+'Personažas':'persirengė skirtingu personažu','Rekvizitas':'pasirinko skirtingą rekvizitą',
+'Išradimas':'sukūrė skirtingą išradimą'
+};
+function storyFor(p){
+ const parts=p.cats.map(c=>categoryDescriptions[c.label]);
+ if(parts.some(x=>!x))throw new Error('Trūksta aprašymo kategorijai: '+p.cats.map(c=>c.label).join(', '));
+ return 'Kiekvienas vaikas '+parts.join(', ').replace(/, ([^,]*)$/, ' ir $1')+'. Išsiaiškink, kas su kuo susiję!';
+}
 function create(){let lvl=levels[+$('level').value],n=lvl.n,k=lvl.k;let theme=shuffle(themes)[0];let people=shuffle(theme.people).slice(0,n),cats=shuffle(theme.cats).slice(0,k).map(c=>({...c,items:shuffle(c.items).slice(0,n)}));let sol=Array.from({length:k},()=>shuffle(Array.from({length:n},(_,i)=>i)));
 let clues=[];
 for(let g=0;g<k;g++)for(let i=0;i<n;i++)for(let v=0;v<n;v++){
  let yes=sol[g][i]===v,cat=cats[g];
  if(yes)clues.push({text:sentence(people[i],cat,v),test:w=>w[g][i]===v,kind:'direct'});
- else clues.push({text:people[i]+' '+(cat.standalone?'ne'+cat.items[v]:'ne'+phrase(cat,v))+'.',test:w=>w[g][i]!==v,kind:'negative'});
+ else clues.push({text:negativeSentence(people[i],cat,v),test:w=>w[g][i]!==v,kind:'negative'});
 }
 for(let g=0;g<k;g++)for(let h=g+1;h<k;h++)for(let v=0;v<n;v++)for(let u=0;u<n;u++){
  let ownerG=sol[g].indexOf(v),ownerH=sol[h].indexOf(u);let same=ownerG===ownerH;
@@ -154,7 +209,7 @@ function render(){
  let p=puzzle;
  $('levelTag').textContent=p.lvl.name;
  $('storyTitle').textContent=p.theme.title;
- $('storyText').textContent=p.theme.story;
+ $('storyText').textContent=storyFor(p);
  $('clues').replaceChildren();
  for(const c of p.clues){let li=document.createElement('li');li.textContent=c.text;$('clues').append(li)}
  const root=$('grids');root.replaceChildren();
