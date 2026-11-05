@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loginiai detektyvai | Galiu išmokti!</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#263450;background:#f5f8ff}*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #5d74e8;outline-offset:2px}.wrap{max-width:1120px;margin:auto;padding:20px 15px 60px}.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.logo{font-size:31px}.top h1{font-size:clamp(25px,4vw,37px);margin:0;color:#2c4887}.sub{color:#64748b;margin:5px 0 20px}.panel{background:white;border:1px solid #dfe7f4;border-radius:20px;padding:20px;box-shadow:0 5px 20px #22366a0a}.toolbar{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:18px}.toolbar label{font-weight:700;display:grid;gap:5px}.toolbar select{padding:11px;border-radius:12px;border:1px solid #b9c8e3;background:#fff;min-width:200px}.btn{border:0;border-radius:12px;padding:11px 16px;background:#4969d6;color:white;font-weight:700}.btn.secondary{background:#eaf0ff;color:#304f9e}.btn.light{background:#edf8f2;color:#167c4b}.btn:disabled{opacity:.5;cursor:default}.layout{display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:18px}.story{line-height:1.55}.story h2{margin:0 0 8px;font-size:22px}.story p{margin:0 0 15px}.clues{padding-left:26px;margin:0}.clues li{margin:0 0 12px;padding-left:3px}.clues li::marker{font-weight:800;color:#4665bd}.small{font-size:13px;color:#62728d}.gridarea h2{margin:0 0 12px;font-size:21px}.grids{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}.gridbox{border:1px solid #dce5f3;border-radius:14px;padding:10px;min-width:0}.gridbox h3{font-size:14px;margin:0 0 9px;color:#40558b}.logic{border-collapse:separate;border-spacing:3px;width:100%;table-layout:fixed}.logic th{font-size:11px;overflow-wrap:anywhere;line-height:1.15;color:#43516a}.logic th:first-child{width:34%}.logic td{padding:0}.cell{width:100%;aspect-ratio:1.1;min-height:34px;border:1px solid #d7e1f1;border-radius:6px;background:#f2f5fb;color:#7a8ca8;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0}.cell.yes{background:#d8f5e6;color:#15834c;border-color:#9dd9b9}.cell.no{background:#ffe8e8;color:#c34a4a;border-color:#f4c1c1}.cell:disabled{cursor:default}.feedback{margin-top:16px;border-radius:12px;padding:13px 15px;background:#eef2ff;color:#324b95;min-height:49px}.feedback.good{background:#e2f7e9;color:#146d3b}.feedback.bad{background:#fff2dc;color:#8b5810}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.footer{margin-top:20px;color:#68768f;font-size:13px}.stat{font-size:14px;color:#50638a;margin:7px 0 15px}.tag{display:inline-block;border-radius:99px;background:#eaf4ff;padding:4px 10px;font-weight:700;color:#3b63a0;font-size:12px}.help{background:#fff8e8;border-radius:12px;padding:12px;margin-top:16px;font-size:14px}.hidden{display:none}@media(max-width:760px){.layout{grid-template-columns:1fr}.panel{padding:14px}.wrap{padding:15px 10px 35px}.grids{grid-template-columns:1fr}.logic th{font-size:12px}.cell{min-height:39px}.toolbar select{min-width:0;width:100%}.toolbar label{flex:1}.actions .btn{flex:1}}
+
+/* Viena L formos kryžminė lentelė */
+.grids{display:block;overflow-x:auto;overscroll-behavior-x:contain;padding:3px 0 12px;max-width:100%;}
+/* Vienodas visų langelių ir antraščių tinklelis: lentelė neištempiama iki ekrano pločio. */
+.crossgrid{--square:50px;--names:170px;--group:40px;border-collapse:separate;border-spacing:2px;width:max-content;min-width:0;table-layout:fixed;}
+.crossgrid th,.crossgrid td{padding:0;text-align:center;vertical-align:middle;}
+.crossgrid .corner{background:#e8effd;border-radius:7px;}
+.crossgrid .grouphead{background:#dfe9fc;color:#29467d;font-size:16px;font-weight:800;padding:10px 5px;border-radius:6px;}
+.crossgrid .rowgroup{background:#dfe9fc;color:#29467d;font-size:15px;font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);border-radius:6px;}
+.crossgrid .rowname{height:var(--square);padding:5px 8px;background:#eef3fc;font-size:15px;font-weight:700;overflow-wrap:anywhere;border-radius:5px;}
+.crossgrid .colname{height:156px;vertical-align:bottom;background:#eef3fc;border-radius:5px;}
+.crossgrid .colname span{display:block;writing-mode:vertical-rl;transform:rotate(180deg);max-height:150px;overflow:hidden;font-size:15px;font-weight:700;line-height:1.2;margin:auto;padding:6px 0;}
+.crossgrid .cell{width:100%;height:var(--square);min-height:var(--square);aspect-ratio:auto;font-size:25px;border-radius:5px;}
+.crossgrid .empty{background:transparent;border:0;}
+.crossgrid .rowgroup-end td,.crossgrid .rowgroup-end th{border-bottom:2px solid #afc1e4;}
+.crossgrid .section-start{border-left:2px solid #afc1e4;}
+.home-link{display:inline-flex;align-items:center;gap:7px;text-decoration:none;border-radius:12px;padding:11px 15px;background:#eaf0ff;color:#304f9e;font-weight:750;border:1px solid #cfdbf4;}
+.home-link:hover{background:#dfe9ff}.home-link:focus-visible{outline:3px solid #5d74e8;outline-offset:2px}
+@media(max-width:760px){.crossgrid{--square:35px;--names:91px;--group:32px}.crossgrid .colname{height:105px}.crossgrid .colname span{max-height:100px;font-size:12px}.crossgrid .rowname{font-size:12px}.crossgrid .rowgroup{font-size:12px}.crossgrid .grouphead{font-size:12px}.crossgrid .cell{font-size:20px}.grids{margin-right:-7px}}
+
+/* V6: platesnis darbalaukio maketas ir valdymas šalia lentelės */
+@media (min-width:1101px){
+ .wrap{max-width:1600px;padding:22px 24px 55px}
+ .layout{grid-template-columns:minmax(310px,390px) minmax(0,1fr);gap:20px;align-items:start}
+ .gridarea{display:grid;grid-template-columns:minmax(0,1fr) 172px;column-gap:20px;align-items:start}
+ .gridarea>h2,.gridarea>.small{grid-column:1/-1}
+ .gridarea>.small{margin-top:0}
+ .gridarea>.grids{grid-column:1;grid-row:3;min-width:0}
+ .gridarea>.actions{grid-column:2;grid-row:3 / span 2;display:flex;flex-direction:column;align-self:center;margin:0;gap:12px}
+ .gridarea>.actions .btn{width:100%;min-height:53px;white-space:normal}
+ .gridarea>.stat{grid-column:1;grid-row:4}
+ .gridarea>.feedback{grid-column:1/-1;grid-row:5}
+ .crossgrid{--square:clamp(43px,3.35vw,57px);--names:clamp(138px,12vw,184px);--group:43px}
+ .crossgrid .rowname{font-size:16px}.crossgrid .colname span{font-size:16px}
+ .crossgrid .grouphead{font-size:17px}
+}
+@media (min-width:761px) and (max-width:1100px){
+ .wrap{max-width:100%;padding:18px 18px 50px}
+ .layout{grid-template-columns:minmax(260px,33%) minmax(0,1fr)}
+ .crossgrid{--square:43px;--names:125px;--group:36px}
+}
+@media(max-width:760px){.gridarea{display:block}.gridarea .actions{display:flex;flex-direction:row}.gridarea .actions .btn{flex:1}}
+
+/* V7: navigacija atskirai; lentelės viršus viename lygyje su sunkumo pasirinkimu */
+.site-nav{display:flex;justify-content:flex-start;margin:0 0 12px}
+.leftcol{min-width:0;display:flex;flex-direction:column;gap:12px}
+.leftcol .toolbar{margin:0;display:flex;align-items:end;gap:10px}
+.leftcol .toolbar label{flex:1;min-width:0}
+.leftcol .toolbar select{width:100%;min-width:0}
+.leftcol .toolbar #new{flex:0 0 auto}
+.layout{align-items:start}
+@media(min-width:1101px){
+ .layout{grid-template-columns:minmax(360px,430px) minmax(0,1fr);gap:20px}
+ .leftcol .toolbar{flex-wrap:wrap;min-height:84px;align-content:start}
+ .gridarea{margin-top:0}
+}
+@media(min-width:761px) and (max-width:1100px){
+ .layout{grid-template-columns:minmax(270px,36%) minmax(0,1fr)}
+ .leftcol .toolbar{flex-wrap:wrap}
+}
+@media(max-width:760px){
+ .site-nav{margin-bottom:12px}
+ .leftcol .toolbar{flex-wrap:wrap}
+ .leftcol .toolbar label{flex-basis:100%}
+ .leftcol .toolbar #new{flex:1}
+ .leftcol{gap:12px}
+}
+/* V10: bendra antrašte virs dvieju stulpeliu */
+.wrap > .top{min-height:0;flex-wrap:nowrap;align-items:center;margin:4px 0 14px}
+.wrap > .top .sub{margin:4px 0 0}
+.wrap > .top h1{font-size:clamp(28px,3vw,40px);line-height:1.12;white-space:nowrap}
+@media(min-width:761px){.gridarea{margin-top:0}}
+@media(max-width:760px){.gridarea{margin-top:0}.wrap > .top h1{white-space:normal}.wrap > .top{margin-bottom:16px}}
+/* V11: grizimo mygtukas ir pavadinimas vienoje eiluteje */
+.site-heading{display:flex;align-items:center;gap:clamp(18px,3vw,48px);margin:0 0 16px;min-width:0}
+.site-heading .site-nav{margin:0;flex:0 0 auto}
+.site-heading > .top{margin:0;min-width:0;flex:1;flex-wrap:nowrap}
+.site-heading .top .sub{margin:4px 0 0}
+.site-heading .top h1{font-size:clamp(27px,3vw,40px);white-space:nowrap;line-height:1.12}
+@media(max-width:760px){.site-heading{flex-wrap:wrap;gap:12px}.site-heading > .top{flex-basis:100%}.site-heading .top h1{white-space:normal}}
+</style>
+</head>
+<body><main class="wrap">
+<div class="site-heading"><nav class="site-nav"><a class="home-link" href="https://galiuismokti.lt/">⌂ Į pagrindinį puslapį</a></nav>
+<header class="top"><span class="logo" aria-hidden="true">✨🕵️</span><div><h1>Loginiai detektyvai</h1><p class="sub">Skaityk, mąstyk, atrask! · Galiu išmokti!</p></div></header></div><div class="layout"><div class="leftcol"><div class="toolbar"><label>Sunkumo lygis<select id="level"><option value="0">1 · Pradedantysis (1 kl.)</option><option value="1">2 · Smalsuolis (2 kl.)</option><option value="2">3 · Gudruolis (3 kl.)</option><option value="3">4 · Meistras (4 kl.)</option></select></label><button class="btn" id="new">🎲 Naujas galvosūkis</button></div>
+<section class="panel story"><span class="tag" id="levelTag"></span><h2 id="storyTitle" style="margin-top:12px"></h2><p id="storyText"></p><h3>🔍 Užuominos</h3><ol class="clues" id="clues"></ol><div class="help"><strong>Kaip žaisti?</strong><p style="margin:7px 0 0">Lentelėje susiek du dalykus. Paspausk langelį vieną kartą – <b>✓ tinka</b>, antrą – <b>× netinka</b>, trečią – vėl tuščia. Kiekvienas veikėjas turi po vieną skirtingą daiktą iš kiekvienos grupės.</p></div></section></div>
+<section class="panel gridarea"><h2>🧩 Detektyvo lentelės</h2><p class="small">Žalia ✓ – tikrai tinka. Raudona × – netinka. Visa informacija vienoje L formos lentelėje. Telefone lentelę slink į šoną.</p><div class="grids" id="grids"></div><div class="stat" id="progress"></div><div class="actions"><button class="btn" id="check">✓ Patikrinti</button><button class="btn light" id="hint">💡 Pagalba</button><button class="btn secondary" id="clear">↺ Išvalyti lenteles</button></div><div class="feedback" id="feedback" role="status" aria-live="polite">Pradėk nuo pirmos užuominos!</div></section></div>
+<p class="footer">Bandomoji žaidimo versija 11 · Veikia ir be interneto · Galvosūkiai tikrinami, kad turėtų vienintelį sprendimą.</p>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const themes=[
+{title:'Miško detektyvai',story:'Vaikai išėjo į mišką. Kiekvienas pamatė vis kitą gyvūną ir turėjo skirtingą daiktą. Išsiaiškink, kas ką matė ir turėjo!',people:['Ona','Matas','Ieva','Lukas','Emilija'],cats:[{label:'Sutiktas gyvūnas',items:['lapę','ežį','kiškį','voverę','briedį'],verb:'sutiko',subject:'sutiktas gyvūnas'},{label:'Turimas daiktas',items:['knygą','kompasą','žibintuvėlį','užrašinę','fotoaparatą'],verb:'turėjo',subject:'turimas daiktas'},{label:'Rasta vieta',items:['prie upelio','prie ąžuolo','pievoje','prie tiltelio','ant kalnelio'],verb:'buvo',subject:'buvimo vieta'}]},
+{title:'Paslaptinga biblioteka',story:'Vaikai bibliotekoje pasirinko skirtingas knygas ir atsisėdo skirtingose vietose.',people:['Austėja','Benas','Ugnė','Nojus','Rūta'],cats:[{label:'Knyga',items:['knygą apie kosmosą','pasakų knygą','knygą apie dinozaurus','eilėraščių knygą','knygą apie jūrą'],verb:'skaitė'},{label:'Vieta',items:['prie lango','ant sofos','prie stalo','ant suoliuko','prie lentynos'],verb:'sėdėjo'},{label:'Daiktas',items:['pieštuką','liniuotę','užrašinę','skirtuką','kuprinę'],verb:'turėjo'}]},
+{title:'Mokyklos mugė',story:'Mugėje vaikai pirko skirtingus skanėstus ir rinkosi skirtingas dovanas.',people:['Ema','Tomas','Liepa','Domas','Saulė'],cats:[{label:'Skanėstas',items:['obuolį','sausainį','bandelę','kriaušę','riestainį'],verb:'nusipirko'},{label:'Dovana',items:['atviruką','ženkliuką','piešinį','magnetuką','pakabuką'],verb:'išsirinko'},{label:'Spalva',items:['raudoną','žalią','geltoną','mėlyną','violetinę'],verb:'pasirinko',suffix:' spalvą'}]},
+{title:'Gyvūnų prieglauda',story:'Vaikai aplankė prieglaudą. Kiekvienas glostė skirtingą gyvūną ir atnešė po dovaną.',people:['Gabija','Adomas','Kamilė','Jonas','Viltė'],cats:[{label:'Gyvūnas',items:['katę','šunį','triušį','žiurkėną','jūrų kiaulytę'],verb:'glostė'},{label:'Dovana',items:['antklodę','žaislą','dubens rinkinį','kamuoliuką','guolį'],verb:'atnešė'},{label:'Veikla',items:['piešė','skaitė','dainavo','fotografavo','tvarkė'],verb:'',standalone:true}]},
+{title:'Kelionė į parką',story:'Draugai parke pasirinko skirtingas veiklas ir atsinešė skirtingų daiktų.',people:['Aistė','Rokas','Miglė','Titas','Greta'],cats:[{label:'Veikla',items:['važinėjimą dviračiu','piešimą','žaidimą kamuoliu','bėgimą','aitvaro leidimą'],verb:'pasirinko'},{label:'Daiktas',items:['kamuolį','aitvarą','vandens gertuvę','kepurę','kuprinę'],verb:'atsinešė'},{label:'Vieta',items:['prie fontano','prie medžio','ant pievos','prie suoliuko','prie tako'],verb:'buvo'}]},
+{title:'Kosmoso ekspedicija',story:'Jaunieji astronautai tyrinėjo skirtingas planetas ir pasiėmė po prietaisą.',people:['Aldas','Ignas','Lina','Rasa','Kajus'],cats:[{label:'Planeta',items:['Marsą','Venerą','Jupiterį','Saturną','Neptūną'],verb:'tyrinėjo'},{label:'Prietaisas',items:['teleskopą','fotoaparatą','radiją','kompiuterį','žemėlapį'],verb:'pasiėmė'},{label:'Ženklas',items:['žvaigždę','raketą','mėnulį','kometą','saulę'],verb:'nupiešė'}]},
+{title:'Paukščių stebėtojai',story:'Vaikai stebėjo skirtingus paukščius ir pasižymėjo, kur juos pamatė.',people:['Agnė','Dovydas','Elzė','Pijus','Urtė'],cats:[{label:'Paukštis',items:['gulbę','zylę','genį','gandrą','antį'],verb:'stebėjo'},{label:'Vieta',items:['prie ežero','miške','pievoje','prie upės','sode'],verb:'buvo'},{label:'Priemonė',items:['žiūronus','užrašinę','fotoaparatą','pieštuką','žemėlapį'],verb:'turėjo'}]},
+{title:'Lobių paieška',story:'Kiekvienas detektyvas rado skirtingą lobį ir paliko jį vis kitoje vietoje.',people:['Karolis','Austė','Nedas','Eglė','Milda'],cats:[{label:'Lobis',items:['monetą','žiedą','raktą','medalį','akmenėlį'],verb:'rado'},{label:'Vieta',items:['po suolu','prie medžio','ant stalo','prie vartų','po tiltu'],verb:'paliko lobį'},{label:'Įrankis',items:['kastuvėlį','žibintuvėlį','kompasą','didinamąjį stiklą','žemėlapį'],verb:'turėjo'}]},
+{title:'Pasakų šventė',story:'Šventėje vaikai persirengė skirtingais personažais ir pasirinko po rekvizitą.',people:['Monika','Joris','Kotryna','Arnas','Smiltė'],cats:[{label:'Personažas',items:['piratu','karaliumi','ragana','riteriu','fėja'],verb:'persirengė'},{label:'Rekvizitas',items:['kardą','lazdelę','karūną','skrybėlę','skydą'],verb:'pasiėmė'},{label:'Vieta',items:['prie scenos','salėje','kieme','prie durų','koridoriuje'],verb:'stovėjo'}]},
+{title:'Mažieji išradėjai',story:'Vaikai sukūrė skirtingus išradimus ir juos pristatė naudodami skirtingas priemones.',people:['Augustė','Herkus','Paulina','Dominykas','Sofija'],cats:[{label:'Išradimas',items:['robotą','skraidantį dviratį','stebuklingą kuprinę','kalbantį laikrodį','saulės automobilį'],verb:'sukūrė'},{label:'Priemonė',items:['plakatą','modelį','piešinį','vaizdo įrašą','nuotrauką'],verb:'parodė'},{label:'Vieta',items:['klasėje','bibliotekoje','salėje','kieme','laboratorijoje'],verb:'pristatė išradimą'}]}
+];
+const levels=[{n:3,k:2,name:'1 · Pradedantysis'},{n:3,k:3,name:'2 · Smalsuolis'},{n:4,k:2,name:'3 · Gudruolis'},{n:4,k:3,name:'4 · Meistras'}];
+let puzzle,marks={},hintCount=0,lastSignature='',solved=false;
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function perms(a){if(a.length===1)return [a];return a.flatMap((x,i)=>perms(a.filter((_,j)=>i!==j)).map(p=>[x,...p]))}
+const cache={};function worlds(n,k){let key=n+'-'+k;if(cache[key])return cache[key];let p=perms(Array.from({length:n},(_,i)=>i)),out=[[]];for(let j=0;j<k;j++)out=out.flatMap(w=>p.map(q=>[...w,q]));return cache[key]=out}
+function phrase(cat,i){return cat.standalone?cat.items[i]:cat.verb+' '+cat.items[i]+(cat.suffix||'')}
+function sentence(name,cat,i){return name+' '+phrase(cat,i)+'.'}
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function create(){let lvl=levels[+$('level').value],n=lvl.n,k=lvl.k;let theme=shuffle(themes)[0];let people=shuffle(theme.people).slice(0,n),cats=shuffle(theme.cats).slice(0,k).map(c=>({...c,items:shuffle(c.items).slice(0,n)}));let sol=Array.from({length:k},()=>shuffle(Array.from({length:n},(_,i)=>i)));
+let clues=[];
+for(let g=0;g<k;g++)for(let i=0;i<n;i++)for(let v=0;v<n;v++){
+ let yes=sol[g][i]===v,cat=cats[g];
+ if(yes)clues.push({text:sentence(people[i],cat,v),test:w=>w[g][i]===v,kind:'direct'});
+ else clues.push({text:people[i]+' '+(cat.standalone?'ne'+cat.items[v]:'ne'+phrase(cat,v))+'.',test:w=>w[g][i]!==v,kind:'negative'});
+}
+for(let g=0;g<k;g++)for(let h=g+1;h<k;h++)for(let v=0;v<n;v++)for(let u=0;u<n;u++){
+ let ownerG=sol[g].indexOf(v),ownerH=sol[h].indexOf(u);let same=ownerG===ownerH;
+ if(same){let first=capitalize(phrase(cats[g],v)),second=phrase(cats[h],u);clues.push({text:'Tas pats vaikas '+first.charAt(0).toLowerCase()+first.slice(1)+' ir '+second+'.',test:w=>w[g].indexOf(v)===w[h].indexOf(u),kind:'cross'});}
+}
+let remaining=worlds(n,k),picked=[];let pool=shuffle(clues);
+// Always finish with a uniquely solvable puzzle. Prefer varied clue types.
+while(remaining.length>1&&pool.length){let scored=[];for(let i=0;i<pool.length;i++){let c=pool[i],count=0;for(const w of remaining)if(c.test(w))count++;if(count>0&&count<remaining.length)scored.push({i,c,count})}if(!scored.length)break;scored.sort((a,b)=>a.count-b.count);let best=scored[0].count;let shortlist=scored.filter(x=>x.count<=best*1.25);let kinds=new Set(picked.map(x=>x.kind));let preferred=shortlist.filter(x=>!kinds.has(x.c.kind));let selected=shuffle(preferred.length?preferred:shortlist)[0];picked.push(selected.c);remaining=remaining.filter(w=>selected.c.test(w));pool.splice(selected.i,1)}
+// If greedy selection somehow fails, direct statements guarantee a solution.
+if(remaining.length!==1){for(let g=0;g<k;g++)for(let i=0;i<n;i++){let c=clues.find(x=>x.kind==='direct'&&x.text===sentence(people[i],cats[g],sol[g][i]));if(c&&!picked.includes(c))picked.push(c)}}
+// Remove clues that are redundant; this keeps the reading load manageable.
+for(let i=picked.length-1;i>=0;i--){let test=picked.filter((_,j)=>j!==i);let matches=0;for(const w of worlds(n,k)){if(test.every(c=>c.test(w))&&++matches>1)break}if(matches===1)picked.splice(i,1)}
+let signature=theme.title+'|'+people.join(',')+'|'+cats.map(c=>c.items.join(',')).join('|')+'|'+sol.map(s=>s.join('')).join('|');
+return {lvl,theme,n,k,groups:[people,...cats.map(c=>c.items)],cats,sol,clues:shuffle(picked),signature};}
+function key(a,b,i,j){return `${a}-${b}-${i}-${j}`}
+function correct(a,b,i,j){let p=puzzle,oa=a===0?i:p.sol[a-1].indexOf(i),ob=b===0?j:p.sol[b-1].indexOf(j);return oa===ob}
+function render(){
+ let p=puzzle;
+ $('levelTag').textContent=p.lvl.name;
+ $('storyTitle').textContent=p.theme.title;
+ $('storyText').textContent=p.theme.story;
+ $('clues').replaceChildren();
+ for(const c of p.clues){let li=document.createElement('li');li.textContent=c.text;$('clues').append(li)}
+ const root=$('grids');root.replaceChildren();
+ const table=document.createElement('table');table.className='crossgrid';
+ const colgroup=document.createElement('colgroup');
+ for(const width of ['var(--group)','var(--names)',...Array(p.k*p.n).fill('var(--square)')]){const col=document.createElement('col');col.style.width=width;colgroup.append(col)}
+ table.append(colgroup);
+ const thead=document.createElement('thead');
+ const groups=document.createElement('tr');
+ const corner=document.createElement('th');corner.className='corner';corner.colSpan=2;corner.rowSpan=2;corner.textContent='🔎';groups.append(corner);
+ for(let b=1;b<=p.k;b++){let th=document.createElement('th');th.className='grouphead'+(b>1?' section-start':'');th.colSpan=p.n;th.scope='colgroup';th.textContent=p.cats[b-1].label;groups.append(th)}
+ thead.append(groups);
+ const headings=document.createElement('tr');
+ for(let b=1;b<=p.k;b++)for(let j=0;j<p.n;j++){let th=document.createElement('th');th.className='colname'+(j===0&&b>1?' section-start':'');th.scope='col';let span=document.createElement('span');span.textContent=p.groups[b][j];th.append(span);headings.append(th)}
+ thead.append(headings);table.append(thead);
+ const tbody=document.createElement('tbody');
+ // Pirmiausia veikėjai, po jų visos kategorijos, išskyrus paskutinę.
+ // Kiekvienoje žemesnėje grupėje tuščias trikampis lieka dešinėje.
+ for(let a=0;a<p.k;a++){
+  for(let i=0;i<p.n;i++){
+   const tr=document.createElement('tr');if(i===p.n-1)tr.className='rowgroup-end';
+   if(i===0){let group=document.createElement('th');group.className='rowgroup';group.rowSpan=p.n;group.scope='rowgroup';group.textContent=a===0?'Veikėjai':p.cats[p.k-a].label;tr.append(group)}
+   const name=document.createElement('th');name.className='rowname';name.scope='row';name.textContent=p.groups[a===0?0:p.k-a+1][i];tr.append(name);
+   for(let b=1;b<=p.k;b++)for(let j=0;j<p.n;j++){
+    const td=document.createElement('td');if(j===0&&b>1)td.classList.add('section-start');
+    if(b>p.k-a){td.classList.add('empty');td.setAttribute('aria-hidden','true')}
+    else{
+     const btn=document.createElement('button');btn.type='button';btn.className='cell';btn.dataset.key=key(Math.min(a===0?0:p.k-a+1,b),Math.max(a===0?0:p.k-a+1,b),...(a===0?[i,j]:[j,i]));
+     btn.setAttribute('aria-label',p.groups[a===0?0:p.k-a+1][i]+' ir '+p.groups[b][j]);
+     btn.onclick=()=>{let id=btn.dataset.key;marks[id]=marks[id]==='yes'?'no':marks[id]==='no'?'':'yes';solved=false;updateCells();message('Toliau nagrinėk užuominas arba patikrink atsakymus.','')};
+     td.append(btn)
+    }
+    tr.append(td)
+   }
+   tbody.append(tr)
+  }
+ }
+ table.append(tbody);root.append(table);updateCells()
+}
+function updateCells(){document.querySelectorAll('.cell').forEach(btn=>{let v=marks[btn.dataset.key]||'';btn.className='cell'+(v?' '+v:'');btn.textContent=v==='yes'?'✓':v==='no'?'×':''});let p=puzzle,yes=Object.values(marks).filter(x=>x==='yes').length,total=p.n*p.k*(p.k+1)/2;$('progress').textContent=`Pažymėta ✓: ${yes} iš ${total} · Pagalbos kartai: ${hintCount}`}
+function message(t,cls){$('feedback').className='feedback'+(cls?' '+cls:'');$('feedback').textContent=t}
+function check(){let p=puzzle,wrong=0,missing=0;for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++){let m=marks[key(a,b,i,j)],c=correct(a,b,i,j);if((m==='yes'&&!c)||(m==='no'&&c))wrong++;if(c&&m!=='yes')missing++}if(!wrong&&!missing){solved=true;message('🎉 Puiku! Galvosūkis išspręstas! Spausk „🎲 Naujas galvosūkis“ ir gausi kitą istoriją arba naujas užuominas.','good')}else message(`Dar yra ką patikrinti. Klaidingi ženklai: ${wrong}. Trūksta teisingų ✓: ${missing}.`,'bad')}
+function hint(){let p=puzzle,options=[];for(let a=0;a<=p.k;a++)for(let b=a+1;b<=p.k;b++)for(let i=0;i<p.n;i++)for(let j=0;j<p.n;j++)if(correct(a,b,i,j)&&marks[key(a,b,i,j)]!=='yes')options.push({a,b,i,j});if(!options.length){message('Visi teisingi ✓ jau pažymėti!','good');return}let x=shuffle(options)[0];marks[key(x.a,x.b,x.i,x.j)]='yes';hintCount++;updateCells();message(`💡 Pagalba: „${p.groups[x.a][x.i]}“ dera su „${p.groups[x.b][x.j]}“. Pažymėjau ✓.`,'')}
+function start(){marks={};hintCount=0;solved=false;let next=create(),attempts=0;while(next.signature===lastSignature&&attempts++<4)next=create();puzzle=next;lastSignature=next.signature;render();message('Naujas galvosūkis paruoštas. Pradėk nuo pirmos užuominos!','')}
+$('new').addEventListener('click',start);$('level').addEventListener('change',start);$('check').addEventListener('click',check);$('hint').addEventListener('click',hint);$('clear').addEventListener('click',()=>{marks={};solved=false;updateCells();message('Lentelės išvalytos. Gali bandyti iš naujo.','')});start();
+</script></body></html>
