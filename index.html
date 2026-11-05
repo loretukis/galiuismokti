@@ -27,6 +27,7 @@
     .art.math{background:linear-gradient(135deg,#e5edff,#e9e2ff)}
     .art.signs{background:linear-gradient(135deg,#fff0db,#ffe6ee)}
     .art.spanish{background:linear-gradient(135deg,#ffe9df,#fff4ce)}
+    .art.logic{background:linear-gradient(135deg,#dff7ed,#e6efff)}
     .mini-grid{display:grid;grid-template-columns:repeat(3,53px);gap:7px;transform:rotate(-7deg)}
     .mini-grid span{display:grid;place-items:center;height:53px;background:#fff;border:2px solid #a6b7ee;border-radius:12px;color:#344eab;font-size:1.5rem;font-weight:900;box-shadow:0 4px 8px #8195d02a}
     .sign-example{display:flex;align-items:center;justify-content:center;gap:8px;transform:rotate(-4deg);font-weight:900;color:#8e4775;font-size:clamp(1.25rem,3vw,2rem)}
@@ -35,16 +36,22 @@
     .spanish-flag{font-size:4.3rem;filter:drop-shadow(0 6px 7px #b8795720)}
     .speech{background:#fff;border:2px solid #f3c7b4;border-radius:23px;padding:13px 21px;color:#c45850;font-weight:900;font-size:clamp(1.55rem,3vw,2.2rem);box-shadow:0 7px 14px #bc8a6522;position:relative}
     .speech:after{content:"";position:absolute;bottom:-12px;left:23px;width:17px;height:17px;background:#fff;border-right:2px solid #f3c7b4;border-bottom:2px solid #f3c7b4;transform:rotate(45deg)}
+    .logic-art{display:flex;align-items:center;gap:22px;transform:rotate(-5deg)}
+    .logic-grid{display:grid;grid-template-columns:repeat(3,37px);gap:5px;padding:9px;background:#fff;border:2px solid #a8cbbd;border-radius:14px;box-shadow:0 6px 14px #3c88701c}
+    .logic-grid span{width:37px;height:37px;display:grid;place-items:center;background:#eef7f5;border-radius:6px;color:#31846c;font-size:1.45rem;font-weight:900}
+    .logic-grid .no{background:#fff0ef;color:#d16b66}
+    .logic-icon{font-size:5.3rem;filter:drop-shadow(0 6px 6px #3b887025)}
     .card-body{padding:23px;display:flex;flex-direction:column;flex:1;gap:12px}
     .tag{font-size:.76rem;font-weight:850;color:#5269b2;background:#edf2ff;padding:6px 11px;border-radius:99px;align-self:flex-start}
     .tag.spanish-tag{background:#fff0e9;color:#b75b48}
+    .tag.logic-tag{background:#e5f7ee;color:#28745b}
     h3{font-size:1.25rem;line-height:1.3;margin:0;color:#263b71}
     .card p{color:#68768e;line-height:1.55;margin:0;flex:1}
     .action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#4668d4;color:#fff;font-weight:800;border-radius:12px;padding:13px 18px;margin-top:5px;min-height:48px}
     .action:hover{background:#3455bf}.action:focus-visible{outline:3px solid #f1a45e;outline-offset:3px}
     footer{border-top:1px solid #e1e8f5;text-align:center;padding:24px 0 34px;color:#7a869b;font-size:.9rem}
     @media(max-width:700px){.cards{grid-template-columns:minmax(0,1fr)}}
-    @media(max-width:550px){.top small{display:none}.hero{padding:24px 0 12px}.section-head{margin:20px 0 14px}.art{height:170px}.sign-example{gap:5px;font-size:clamp(1.1rem,5vw,1.7rem)}.sign-example .missing{width:36px;height:42px}.spanish-flag{font-size:3.6rem}}
+    @media(max-width:550px){.top small{display:none}.hero{padding:24px 0 12px}.section-head{margin:20px 0 14px}.art{height:170px}.sign-example{gap:5px;font-size:clamp(1.1rem,5vw,1.7rem)}.sign-example .missing{width:36px;height:42px}.spanish-flag{font-size:3.6rem}.logic-icon{font-size:4.4rem}.logic-art{gap:12px}}
   </style>
 </head>
 <body>
@@ -60,7 +67,7 @@
       <div class="cards" id="cards">
         <article class="card" data-category="matematika">
           <div class="art math" aria-hidden="true"><div class="mini-grid"><span>8</span><span>1</span><span>6</span><span>3</span><span>5</span><span>7</span><span>4</span><span>9</span><span>2</span></div></div>
-          <div class="card-body"><span class="tag">🔢 Matematika</span><h3>Įdomieji kvadratai ir trikampiai</h3><p>Įrašyk trūkstamus skaičius, atrask bendrą sumą ir įveik skaičių galvosūkius!</p><a class="action" href="zaidimai/kvadratai-trikampiai/">🎮 Žaisti</a></div>
+          <div class="card-body"><span class="tag">🔢 Matematika</span><h3>Įdomieji kvadratai ir trikampiai</h3><p>Įrašyk trūkstamus skaičius ir įveik skaičių galvosūkį!</p><a class="action" href="zaidimai/kvadratai-trikampiai/">🎮 Žaisti</a></div>
         </article>
         <article class="card" data-category="matematika">
           <div class="art signs" aria-hidden="true"><div class="sign-example"><span>17</span><span class="missing">?</span><span>21</span><span class="missing">?</span><span>9</span><span>= 29</span></div></div>
@@ -70,10 +77,14 @@
           <div class="art spanish" aria-hidden="true"><div class="spanish-art"><span class="spanish-flag">🇪🇸</span><span class="speech">¡Hola! 👋</span></div></div>
           <div class="card-body"><span class="tag spanish-tag">🇪🇸 Ispanų kalba</span><h3>¡Vamos a jugar!</h3><p>Mokykis ispaniškų žodžių žaisdamas: klausyk, spėk, ieškok porų ir kartok pasirinktas temas!</p><a class="action" href="zaidimai/ispanu-zodziai/">🎮 Žaisti</a></div>
         </article>
+        <article class="card" data-category="logika">
+          <div class="art logic" aria-hidden="true"><div class="logic-art"><span class="logic-icon">🕵️</span><div class="logic-grid"><span>✓</span><span></span><span class="no">×</span><span class="no">×</span><span>✓</span><span></span><span></span><span class="no">×</span><span>✓</span></div></div></div>
+          <div class="card-body"><span class="tag logic-tag">🔎 Logika</span><h3>Loginiai detektyvai</h3><p>Skaityk užuominas, ieškok ryšių ir atskleisk paslaptis detektyvo lentelėje!</p><a class="action" href="zaidimai/loginiai-detektyvai/">🎮 Žaisti</a></div>
+        </article>
       </div>
     </section>
   </main>
-  <footer><div class="wrap">© <span id="year"></span> Galiu išmokti! · Bandau. Atrandu. Tobulėju.</div></footer>
+  <footer><div class="wrap">© <span id="year"></span> Loreta L. Galiu išmokti! · Bandau. Atrandu. Tobulėju.</div></footer>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
