@@ -28,6 +28,7 @@
     .art.signs{background:linear-gradient(135deg,#fff0db,#ffe6ee)}
     .art.spanish{background:linear-gradient(135deg,#ffe9df,#fff4ce)}
     .art.logic{background:linear-gradient(135deg,#dff7ed,#e6efff)}
+    .art.english{background:linear-gradient(135deg,#e0edff,#f1e5ff)}
     .mini-grid{display:grid;grid-template-columns:repeat(3,53px);gap:7px;transform:rotate(-7deg)}
     .mini-grid span{display:grid;place-items:center;height:53px;background:#fff;border:2px solid #a6b7ee;border-radius:12px;color:#344eab;font-size:1.5rem;font-weight:900;box-shadow:0 4px 8px #8195d02a}
     .sign-example{display:flex;align-items:center;justify-content:center;gap:8px;transform:rotate(-4deg);font-weight:900;color:#8e4775;font-size:clamp(1.25rem,3vw,2rem)}
@@ -41,17 +42,22 @@
     .logic-grid span{width:37px;height:37px;display:grid;place-items:center;background:#eef7f5;border-radius:6px;color:#31846c;font-size:1.45rem;font-weight:900}
     .logic-grid .no{background:#fff0ef;color:#d16b66}
     .logic-icon{font-size:5.3rem;filter:drop-shadow(0 6px 6px #3b887025)}
+    .english-art{display:flex;align-items:center;gap:18px;transform:rotate(-4deg)}
+    .english-flag{font-size:4.3rem;filter:drop-shadow(0 6px 7px #5b7ab220)}
+    .english-speech{background:#fff;border:2px solid #b8ccef;border-radius:23px;padding:13px 21px;color:#315da7;font-weight:900;font-size:clamp(1.55rem,3vw,2.2rem);box-shadow:0 7px 14px #6082b122;position:relative}
+    .english-speech:after{content:"";position:absolute;bottom:-12px;left:23px;width:17px;height:17px;background:#fff;border-right:2px solid #b8ccef;border-bottom:2px solid #b8ccef;transform:rotate(45deg)}
     .card-body{padding:23px;display:flex;flex-direction:column;flex:1;gap:12px}
     .tag{font-size:.76rem;font-weight:850;color:#5269b2;background:#edf2ff;padding:6px 11px;border-radius:99px;align-self:flex-start}
     .tag.spanish-tag{background:#fff0e9;color:#b75b48}
     .tag.logic-tag{background:#e5f7ee;color:#28745b}
+    .tag.english-tag{background:#e9efff;color:#315da7}
     h3{font-size:1.25rem;line-height:1.3;margin:0;color:#263b71}
     .card p{color:#68768e;line-height:1.55;margin:0;flex:1}
     .action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#4668d4;color:#fff;font-weight:800;border-radius:12px;padding:13px 18px;margin-top:5px;min-height:48px}
     .action:hover{background:#3455bf}.action:focus-visible{outline:3px solid #f1a45e;outline-offset:3px}
     footer{border-top:1px solid #e1e8f5;text-align:center;padding:24px 0 34px;color:#7a869b;font-size:.9rem}
     @media(max-width:700px){.cards{grid-template-columns:minmax(0,1fr)}}
-    @media(max-width:550px){.top small{display:none}.hero{padding:24px 0 12px}.section-head{margin:20px 0 14px}.art{height:170px}.sign-example{gap:5px;font-size:clamp(1.1rem,5vw,1.7rem)}.sign-example .missing{width:36px;height:42px}.spanish-flag{font-size:3.6rem}.logic-icon{font-size:4.4rem}.logic-art{gap:12px}}
+    @media(max-width:550px){.top small{display:none}.hero{padding:24px 0 12px}.section-head{margin:20px 0 14px}.art{height:170px}.sign-example{gap:5px;font-size:clamp(1.1rem,5vw,1.7rem)}.sign-example .missing{width:36px;height:42px}.spanish-flag,.english-flag{font-size:3.6rem}.logic-icon{font-size:4.4rem}.logic-art{gap:12px}.english-art{gap:12px}}
   </style>
 </head>
 <body>
@@ -81,21 +87,22 @@
           <div class="art logic" aria-hidden="true"><div class="logic-art"><span class="logic-icon">🕵️</span><div class="logic-grid"><span>✓</span><span></span><span class="no">×</span><span class="no">×</span><span>✓</span><span></span><span></span><span class="no">×</span><span>✓</span></div></div></div>
           <div class="card-body"><span class="tag logic-tag">🔎 Logika</span><h3>Loginiai detektyvai</h3><p>Skaityk užuominas, ieškok ryšių ir atskleisk paslaptis detektyvo lentelėje!</p><a class="action" href="zaidimai/loginiai-detektyvai/">🎮 Žaisti</a></div>
         </article>
+        <article class="card" data-category="anglu-kalba">
+          <div class="art english" aria-hidden="true"><div class="english-art"><span class="english-flag">🇬🇧</span><span class="english-speech">Hello! 🔊</span></div></div>
+          <div class="card-body"><span class="tag english-tag">🇬🇧 Anglų kalba</span><h3>Anglų kalbos žodynas</h3><p>Mokykis angliškų žodžių: klausyk tarimo, atpažink paveikslėlius, dėliok raides ir rašyk!</p><a class="action" href="zaidimai/angluk-zodziai/">🎮 Žaisti</a></div>
+        </article>
       </div>
     </section>
   </main>
   <footer>
-  <div class="wrap">
-    © <span id="year"></span> Loreta L. Galiu išmokti! · Bandau. Atrandu. Tobulėju.
-    <div style="margin-top:10px;">
-      Klausimams ir pasiūlymams:
-      <a href="mailto:galiuismokti@gmail.com"
-         style="color:#5269b2;font-weight:600;">
-        ✉️ galiuismokti@gmail.com
-      </a>
+    <div class="wrap">
+      © <span id="year"></span> Loreta L. Galiu išmokti! · Bandau. Atrandu. Tobulėju.
+      <div style="margin-top:10px;">
+        Klausimams ir pasiūlymams:
+        <a href="mailto:galiuismokti@gmail.com" style="color:#5269b2;font-weight:600;">✉️ galiuismokti@gmail.com</a>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
