@@ -29,6 +29,10 @@
     .art.spanish{background:linear-gradient(135deg,#ffe9df,#fff4ce)}
     .art.logic{background:linear-gradient(135deg,#dff7ed,#e6efff)}
     .art.english{background:linear-gradient(135deg,#e0edff,#f1e5ff)}
+    .art.mystery{background:linear-gradient(135deg,#fff2cc,#e8e5ff)}
+    .mystery-art{display:flex;align-items:center;gap:18px;transform:rotate(-5deg)}
+    .mystery-number{display:grid;place-items:center;width:105px;height:105px;background:white;border:3px solid #e5bb6c;border-radius:24px;color:#7454aa;font-size:4.5rem;font-weight:900;box-shadow:0 8px 18px #a98b4b2c}
+    .mystery-glass{font-size:5rem;filter:drop-shadow(0 5px 5px #7d6d9b30)}
     .mini-grid{display:grid;grid-template-columns:repeat(3,53px);gap:7px;transform:rotate(-7deg)}
     .mini-grid span{display:grid;place-items:center;height:53px;background:#fff;border:2px solid #a6b7ee;border-radius:12px;color:#344eab;font-size:1.5rem;font-weight:900;box-shadow:0 4px 8px #8195d02a}
     .sign-example{display:flex;align-items:center;justify-content:center;gap:8px;transform:rotate(-4deg);font-weight:900;color:#8e4775;font-size:clamp(1.25rem,3vw,2rem)}
@@ -90,6 +94,10 @@
         <article class="card" data-category="anglu-kalba">
           <div class="art english" aria-hidden="true"><div class="english-art"><span class="english-flag">🇬🇧</span><span class="english-speech">Hello! 🔊</span></div></div>
           <div class="card-body"><span class="tag english-tag">🇬🇧 Anglų kalba</span><h3>Anglų kalbos žodynas</h3><p>Mokykis angliškų žodžių: klausyk tarimo, atpažink paveikslėlius, dėliok raides ir rašyk!</p><a class="action" href="zaidimai/angluk-zodziai/">🎮 Žaisti</a></div>
+        </article>
+        <article class="card" data-category="matematika">
+          <div class="art mystery" aria-hidden="true"><div class="mystery-art"><span class="mystery-number">?</span><span class="mystery-glass">🔎</span></div></div>
+          <div class="card-body"><span class="tag">🔢 Matematika</span><h3>Paslaptingasis skaičius</h3><p>Skaityk užuominas, mąstyk ir išsiaiškink, koks skaičius slepiasi!</p><a class="action" href="zaidimai/paslaptingasis-skaicius/">🎮 Žaisti</a></div>
         </article>
       </div>
     </section>
