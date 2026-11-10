@@ -1,0 +1,219 @@
+<!doctype html><html lang="lt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f8ff"><title>Paslaptingasis skaičius | Galiu išmokti!</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#253456;background:#f5f8ff}*{box-sizing:border-box}body{margin:0}.wrap{max-width:930px;margin:auto;padding:22px 20px 55px}header{display:flex;align-items:center;justify-content:space-between;gap:12px}a{color:#365cb0;text-decoration:none;font-weight:650}h1{font-size:clamp(27px,4vw,38px);margin:24px 0 5px}.muted{color:#64748b}.intro{margin:0 0 16px}.panel{background:#fff;border:1px solid #dce4f1;border-radius:18px;padding:24px;box-shadow:0 5px 20px #2534560b}.toolbar{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin-bottom:10px}.control{display:flex;flex-direction:column;gap:6px}.control label,.control-title{font-weight:750;font-size:15px}.select,.btn{font:inherit;border:1px solid #b9c9e6;border-radius:12px;background:#fff;color:#263c72;padding:11px 14px;font-weight:700;min-height:46px}.select{min-width:165px;cursor:pointer}.btn{cursor:pointer}.btn.primary{background:#4767d9;border-color:#4767d9;color:white}.btn.soft{background:#e8efff;border-color:#e8efff;color:#294b99}.btn:disabled{opacity:.48;cursor:not-allowed}.lang-switch{display:flex;gap:6px}.lang-switch .btn{min-height:34px;padding:5px 11px}.lang-switch .active{border:2px solid #4169d9;background:#e8efff;padding:4px 10px}.options{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin:12px 0 16px}.options label{display:flex;gap:7px;align-items:center;cursor:pointer;font-weight:600}.options input{accent-color:#4767d9;width:17px;height:17px}.leveldesc{font-size:14px;margin:8px 0 16px}.progress{font-size:13px;font-weight:700;color:#5d7095;margin:0 0 9px}.clue-area{min-height:320px;display:flex;flex-direction:column;gap:8px}.clue{border:1px solid #d9e2f2;border-radius:11px;padding:10px 13px;background:#fafcff;min-height:56px}.clue strong{display:block;margin-bottom:3px;font-size:13px}.clue.current{border-color:#668be2;background:#f0f5ff}.clue.placeholder{border-style:dashed;background:#fafbfe;color:#a4afc1}.clue.placeholder strong{margin:0}.numbers-title{font-size:19px;margin:16px 0 10px}.numbers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.number{height:74px;border:2px solid #b6c7e5;border-radius:12px;background:white;color:#253456;font-size:clamp(23px,3vw,32px);font-weight:750;cursor:pointer}.number.crossed{background:#edf0f5;border-color:#d6dce6;color:#9ba6b9;text-decoration:line-through}.number.correct{background:#d6f6e3;border-color:#20a464;color:#116c40;text-decoration:none}.number.incorrect{background:#ffe0e0;border-color:#dc4040;color:#9e1f1f;text-decoration:none}.number:focus-visible,.btn:focus-visible,.select:focus-visible{outline:3px solid #efaa42;outline-offset:2px}.bottom{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:15px}.feedback{font-weight:700;min-height:25px;margin-top:12px}.feedback.good{color:#127245}.feedback.bad{color:#b72e35}.print-document{display:none}
+@media(max-width:600px){.wrap{padding:14px 12px 30px}.panel{padding:14px}.toolbar{gap:8px}.btn,.select{padding:9px 11px}.number{height:58px}.numbers{gap:6px}.clue-area{min-height:310px}.options{gap:10px}}
+@page{size:A4 portrait;margin:15mm 17mm}
+@media print{body{background:#fff;color:#111}.wrap{display:none!important}.print-document{display:block!important;font-family:Arial,Helvetica,sans-serif;color:#111;font-size:11pt}.print-top{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid #333;padding-bottom:7px;font-size:9pt}.print-top .fields{display:flex;gap:20px}.print-top .line{display:inline-block;border-bottom:1px solid #333;width:100px}.print-title{text-align:center;font-weight:800;font-size:21pt;letter-spacing:.3px;margin:22px 0 4px}.print-sub{text-align:center;font-size:10pt;margin:0 0 22px}.print-section{font-weight:800;font-size:14pt;margin:16px 0 9px}.print-instruction{margin:0 0 12px}.print-clues{padding-left:27px;margin:0 0 24px}.print-clues li{padding-left:4px;margin-bottom:13px;line-height:1.35;break-inside:avoid}.print-numbers{display:grid;grid-template-columns:repeat(5,1fr);gap:18px 10px;margin:22px 5px 0}.print-num{text-align:center;font-size:28pt;font-weight:700;padding:12px 0}.print-footer{border-top:1px solid #999;display:flex;justify-content:space-between;font-size:8pt;color:#555;margin-top:36px;padding-top:6px}.answer-sheet{break-before:page}.answer-sheet .print-section{margin-top:30px}}
+</style><style>
+.wrap{max-width:1330px;padding:20px 24px 55px}
+header{padding:0 0 5px}
+#backLink{background:#eaf0ff;border:1px solid #d8e3fa;padding:11px 15px;border-radius:13px}
+h1{color:#304f93}
+.panel{background:transparent;border:0;box-shadow:none;padding:0}
+.toolbar,.options{padding-left:3px}
+.leveldesc{margin:6px 0 14px}
+.play-layout{display:grid;grid-template-columns:minmax(340px,.9fr) minmax(420px,1.1fr);gap:20px;align-items:start}
+.clue-column,.number-column{background:white;border:1px solid #dfe7f4;border-radius:20px;padding:22px;box-shadow:0 6px 22px #26345608;min-width:0}
+.clue-column{background:#fff}
+.number-column{background:#fff}
+.section-heading{font-size:23px;margin:0 0 10px;color:#24395f}
+.progress{background:#eaf2ff;color:#365ca3;border-radius:20px;display:inline-block;padding:6px 11px;margin:0 0 14px}
+.clue-area{min-height:0;gap:10px}
+.clue{background:#f6f9ff;border-color:#dfe8fa;min-height:68px;padding:13px 15px}
+.clue strong{color:#365da5;font-size:14px}
+.clue.current{background:#eaf2ff;border-color:#89a8e9}
+.clue.placeholder{background:#fbfcff}
+.number-help{font-size:14px;margin:0 0 20px}
+.numbers{gap:12px}
+.number{height:90px;background:#f2f6ff;border-color:#d5e0f7;border-radius:14px}
+.number:hover:not(.crossed){background:#e8efff;border-color:#9cb6ef}
+.number.crossed{background:#eef0f5}
+.feedback{margin-top:20px}
+.bottom{margin-top:15px}
+.btn.primary{background:#4968db;border-color:#4968db}
+@media(min-width:950px){.number-column{min-height:455px}.numbers{margin-top:25px}}
+@media(max-width:850px){.play-layout{grid-template-columns:1fr}.clue-column,.number-column{padding:17px}.number{height:72px}.wrap{padding:14px 12px 35px}}
+@media print{.play-layout{display:none}}
+</style></head><body>
+<main class="wrap"><header><a href="/" id="backLink">← Grįžti į pagrindinį</a><div class="lang-switch"><button class="btn active" data-lang="lt" type="button">LT</button><button class="btn" data-lang="en" type="button">EN</button></div></header>
+<h1 id="gameTitle">🔎 Paslaptingasis skaičius</h1><p class="muted intro" id="intro"></p>
+<section class="panel"><div class="toolbar"><div class="control"><label id="levelLabel" for="levelSelect">Sunkumo lygis</label><select class="select" id="levelSelect"><option value="1" data-level="1">1 lygis</option><option value="2" data-level="2">2 lygis</option><option value="3" data-level="3">3 lygis</option><option value="4" data-level="4">4 lygis</option></select></div><button class="btn primary" id="newGame">🎲 Naujas žaidimas</button><button class="btn soft" id="print">🖨️ Spausdinti</button></div>
+<div class="options"><span class="control-title" id="clueModeLabel">Užuominų rodymas</span><label><input type="radio" name="clueMode" value="one" checked><span id="modeOneText">Po vieną</span></label><label><input type="radio" name="clueMode" value="all"><span id="modeAllText">Visos iš karto</span></label><label><input type="checkbox" id="printAnswers"><span id="printAnswersText">Pridėti atsakymų lapą</span></label></div>
+<p class="muted leveldesc" id="levelDesc"></p><div class="play-layout">
+<section class="clue-column"><h2 class="section-heading">🔎 <span id="clueHeading">Užuominos</span></h2><p class="progress" id="progress"></p><div class="clue-area" id="clues"></div></section>
+<section class="number-column"><h2 class="section-heading">🔢 <span id="numbersTitle">Skaičiai</span></h2><p class="muted number-help" id="numberHelp">Paspausk skaičių, kurį nori išbraukti.</p><div class="numbers" id="numbers"></div><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="bottom"><button class="btn primary" id="check">Patikrinti</button><button class="btn soft" id="nextClue">Kita užuomina</button></div></section>
+</div></section></main><div id="printDocument" class="print-document"></div><script>
+const $=s=>document.querySelector(s);
+const levelDescriptions={1:'Skaičių palyginimas, lyginiai ir nelyginiai skaičiai.',2:'Dešimtys, vienetai, skaitmenų suma ir skirtumas.',3:'Sudėtingesni skaitmenų ryšiai ir kelių sąlygų derinimas.'};
+let lang="lt";
+const translations={lt:{back:"← Grįžti į pagrindinį",title:"🔎 Paslaptingasis skaičius",intro:"Skaityk užuominas ir išbrauk netinkamus skaičius. Koks skaičius pasislėpė?",levels:["1 lygis","2 lygis","3 lygis","4 lygis"],descs:["Skaičių palyginimas, lyginiai ir nelyginiai skaičiai.","Dešimtys, vienetai, skaitmenų suma ir skirtumas.","Sudėtingesni skaitmenų ryšiai ir kelių sąlygų derinimas.","Iššūkis: skaičių dalys, veiksmai ir netiesioginės užuominos."],clue:"Užuomina",numbers:"Skaičiai",check:"Patikrinti",next:"Kita užuomina",newGame:"Naujas žaidimas",print:"Spausdinti",name:"Vardas: ________________________ Data: ______________",crossed:"išbrauktas",notCrossed:"neišbrauktas",wrong:"Pagal šias užuominas išbraukei ir tinkamą skaičių. Pamėgink pataisyti.",missed:"Dar liko skaičių, kuriuos galima išbraukti. Patikrink dar kartą.",win:n=>`Puiku! Paslaptingasis skaičius – ${n}!`,correct:"Teisingai! Gali atversti kitą užuominą."},en:{back:"← Back to home",title:"🔎 Mystery Number",intro:"Read the clues and cross out the numbers that do not fit. Can you find the mystery number?",levels:["Level 1","Level 2","Level 3","Level 4"],descs:["Comparing numbers, even and odd numbers.","Tens, ones, digit sums and differences.","More challenging digit relationships and combined clues.","Challenge: fractions, calculations and indirect clues."],clue:"Clue",numbers:"Numbers",check:"Check",next:"Next clue",newGame:"New game",print:"Print",name:"Name: ________________________ Date: ______________",crossed:"crossed out",notCrossed:"not crossed out",wrong:"You crossed out a number that still fits the clues. Try again.",missed:"There are more numbers you can cross out. Check again.",win:n=>`Great job! The mystery number is ${n}!`,correct:"Correct! You can reveal the next clue."}};
+function translateClue(t){if(lang==="lt")return t;const item=properties(level).find(p=>p.text===t);if(item&&item.en)return item.en;let m;const fixed={"Esu lyginis skaičius.":"I am an even number.","Esu nelyginis skaičius.":"I am an odd number.","Esu lyginis.":"I am even.","Nesu dešimties kartotinis.":"I am not a multiple of ten.","Mano vienetų skaitmuo didesnis už dešimčių skaitmenį.":"My ones digit is greater than my tens digit.","Mano dešimčių skaitmuo didesnis už vienetų skaitmenį.":"My tens digit is greater than my ones digit.","Abu mano skaitmenys lyginiai.":"Both my digits are even.","Abu mano skaitmenys nelyginiai.":"Both my digits are odd.","Mano vienetų skaitmuo dvigubai didesnis už dešimčių skaitmenį.":"My ones digit is twice my tens digit.","Mano dešimčių skaitmuo dvigubai didesnis už vienetų skaitmenį.":"My tens digit is twice my ones digit.","Mano skaitmenų suma didesnė už 10.":"The sum of my digits is greater than 10.","Mano skaitmenų suma mažesnė už 10.":"The sum of my digits is less than 10.","Mano vienetų skaitmuo yra pusė dešimčių skaitmens.":"My ones digit is half my tens digit.","Mano vienetų skaitmuo nėra nulis.":"My ones digit is not zero."};if(fixed[t])return fixed[t];if((m=t.match(/^Esu didesnis už (\d+), bet mažesnis už (\d+)\.$/)))return `I am greater than ${m[1]} but less than ${m[2]}.`;if((m=t.match(/^Esu didesnis už (\d+)\.$/)))return `I am greater than ${m[1]}.`;if((m=t.match(/^Esu mažesnis už (\d+)\.$/)))return `I am less than ${m[1]}.`;if((m=t.match(/^Esu tarp (\d+) ir (\d+)\.$/)))return `I am between ${m[1]} and ${m[2]}.`;if((m=t.match(/^Mano skaitmenų suma yra (\d+)\.$/)))return `The sum of my digits is ${m[1]}.`;if((m=t.match(/^Mano skaitmenų skirtumas yra (\d+)\.$/)))return `The difference between my digits is ${m[1]}.`;if((m=t.match(/^Mano vienetų skaitmuo yra (\d+)\.$/)))return `My ones digit is ${m[1]}.`;if((m=t.match(/^Mano dešimčių skaitmuo yra (\d+)\.$/)))return `My tens digit is ${m[1]}.`;return t;}
+function updateLanguage(){const t=translations[lang];document.documentElement.lang=lang;document.title=(lang==="lt"?"Paslaptingasis skaičius":"Mystery Number")+" | Galiu išmokti!";$("#backLink").textContent=t.back;$("#gameTitle").textContent=t.title;$("#intro").textContent=t.intro;$("#numbersTitle").textContent=t.numbers;$("#clueHeading").textContent=lang==="lt"?"Užuominos":"Clues";$("#numberHelp").textContent=lang==="lt"?"Paspausk skaičių, kurį nori išbraukti.":"Tap a number to cross it out.";$("#check").textContent=t.check;$("#nextClue").textContent=t.next;$("#newGame").innerHTML="🎲 "+t.newGame;$("#print").innerHTML="🖨️ "+t.print;$("#levelLabel").textContent=lang==="lt"?"Sunkumo lygis":"Difficulty level";$("#clueModeLabel").textContent=lang==="lt"?"Užuominų rodymas":"Show clues";$("#modeOneText").textContent=lang==="lt"?"Po vieną":"One at a time";$("#modeAllText").textContent=lang==="lt"?"Visos iš karto":"All at once";$("#printAnswersText").textContent=lang==="lt"?"Pridėti atsakymų lapą":"Include answer sheet";document.querySelectorAll("[data-level]").forEach((b,i)=>b.textContent=t.levels[i]);document.querySelectorAll("[data-lang]").forEach(b=>{const active=b.dataset.lang===lang;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active))});render();}
+let level=1, puzzle=null, visible=1, crossed=new Set(),solved=false,previousKey='';
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){let j=rand(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const digits=n=>[Math.floor(n/10),n%10];
+
+// Each clue belongs to a pedagogical family. No two clues from the same
+// family occur in one puzzle, avoiding both repetition and logical redundancy.
+const history=new Set();
+function properties(level){
+ const p=[];
+ const add=(text,en,test,kind)=>p.push({text,en,test,kind});
+ for(const k of [20,30,40,50,60,70,80,90]){
+  add(`Esu didesnis už ${k}.`,`I am greater than ${k}.`,n=>n>k,"range");
+  add(`Esu mažesnis už ${k}.`,`I am less than ${k}.`,n=>n<k,"range");
+ }
+ for(const [a,b] of [[10,40],[20,50],[30,60],[40,70],[50,80],[60,90],[70,100],[20,70],[30,80],[40,90]]){
+  add(`Esu tarp ${a} ir ${b}.`,`I am between ${a} and ${b}.`,n=>n>a&&n<b,"range");
+ }
+ add("Esu lyginis skaičius.","I am an even number.",n=>n%2===0,"parity");
+ add("Esu nelyginis skaičius.","I am an odd number.",n=>n%2===1,"parity");
+ // Level 1 can state a digit directly. Later levels must express it indirectly.
+ if(level===1){
+  for(let k=0;k<=9;k++){
+   add(`Mano vienetų skaitmuo yra ${k}.`,`My ones digit is ${k}.`,n=>n%10===k,"ones");
+  }
+  for(let k=1;k<=9;k++){
+   add(`Mano dešimčių skaitmuo yra ${k}.`,`My tens digit is ${k}.`,n=>Math.floor(n/10)===k,"tens");
+  }
+  add("Mano vienetų skaitmuo didesnis už 5.","My ones digit is greater than 5.",n=>n%10>5,"ones");
+  add("Mano vienetų skaitmuo mažesnis už 5.","My ones digit is less than 5.",n=>n%10<5,"ones");
+  for(const k of [2,3,4,5,6,7,8]){
+   add(`Mano dešimčių skaitmuo didesnis už ${k}.`,`My tens digit is greater than ${k}.`,n=>digits(n)[0]>k,"tens_compare");
+   add(`Mano vienetų skaitmuo mažesnis už ${k}.`,`My ones digit is less than ${k}.`,n=>digits(n)[1]<k,"ones_compare");
+  }
+ }
+ if(level>=2){
+  add("Abu mano skaitmenys lyginiai.","Both my digits are even.",n=>digits(n).every(d=>d%2===0),"digit_parity");
+  add("Abu mano skaitmenys nelyginiai.","Both my digits are odd.",n=>digits(n).every(d=>d%2===1),"digit_parity");
+  add("Mano skaitmenys skirtingi.","My digits are different.",n=>digits(n)[0]!==digits(n)[1],"digit_relation");
+  add("Mano skaitmenys vienodi.","My digits are the same.",n=>digits(n)[0]===digits(n)[1],"digit_relation");
+  add("Mano vienetų skaitmuo didesnis už dešimčių skaitmenį.","My ones digit is greater than my tens digit.",n=>digits(n)[1]>digits(n)[0],"digit_relation");
+  add("Mano dešimčių skaitmuo didesnis už vienetų skaitmenį.","My tens digit is greater than my ones digit.",n=>digits(n)[0]>digits(n)[1],"digit_relation");
+  for(let k=3;k<=17;k++){
+   add(`Mano skaitmenų suma yra ${k}.`,`The sum of my digits is ${k}.`,n=>digits(n)[0]+digits(n)[1]===k,"digit_sum");
+  }
+  for(let k=1;k<=9;k++){
+   add(`Mano vienetų skaitmuo lygus skaičių ${k+7} ir 7 skirtumui.`,`My ones digit equals the difference between ${k+7} and 7.`,n=>n%10===k,"ones");
+   add(`Mano dešimčių skaitmuo lygus skaičių ${k+6} ir 6 skirtumui.`,`My tens digit equals the difference between ${k+6} and 6.`,n=>digits(n)[0]===k,"tens");
+  }
+ }
+ if(level>=3){
+  for(let k=1;k<=8;k++){
+   add(`Mano skaitmenų skirtumas yra ${k}.`,`The difference between my digits is ${k}.`,n=>Math.abs(digits(n)[0]-digits(n)[1])===k,"digit_difference");
+  }
+  for(let k=1;k<=4;k++){
+   add(`Mano vienetų skaitmuo lygus skaičiaus ${2*k} pusei.`,`My ones digit is half of ${2*k}.`,n=>n%10===k,"ones");
+   add(`Mano dešimčių skaitmuo lygus skaičiaus ${2*k} pusei.`,`My tens digit is half of ${2*k}.`,n=>digits(n)[0]===k,"tens");
+  }
+  for(let k=1;k<=3;k++){
+   add(`Mano vienetų skaitmuo lygus skaičiaus ${3*k} trečdaliui.`,`My ones digit is one third of ${3*k}.`,n=>n%10===k,"ones");
+  }
+  add("Mano vienetų skaitmuo dvigubai didesnis už dešimčių skaitmenį.","My ones digit is twice my tens digit.",n=>digits(n)[1]===2*digits(n)[0],"digit_relation");
+  add("Mano dešimčių skaitmuo dvigubai didesnis už vienetų skaitmenį.","My tens digit is twice my ones digit.",n=>digits(n)[0]===2*digits(n)[1],"digit_relation");
+ }
+ if(level>=4){
+  for(let k=2;k<=16;k++){
+   add(`Mano skaitmenų suma lygi skaičių ${k+9} ir 9 skirtumui.`,`The sum of my digits equals the difference between ${k+9} and 9.`,n=>digits(n)[0]+digits(n)[1]===k,"digit_sum");
+  }
+  for(let k=1;k<=8;k++){
+   add(`Mano skaitmenų skirtumas lygus skaičiaus ${2*k} pusei.`,`The difference between my digits is half of ${2*k}.`,n=>Math.abs(digits(n)[0]-digits(n)[1])===k,"digit_difference");
+  }
+  add("Sukeitus mano skaitmenis vietomis, gautas skaičius būtų didesnis.","If my digits were reversed, the number would be greater.",n=>digits(n)[1]>digits(n)[0],"reversal");
+  add("Sukeitus mano skaitmenis vietomis, gautas skaičius būtų mažesnis.","If my digits were reversed, the number would be smaller.",n=>digits(n)[1]<digits(n)[0],"reversal");
+  for(const k of [12,18,24,30,36,42]){
+   add(`Mano skaitmenų sandauga didesnė už ${k}.`,`The product of my digits is greater than ${k}.`,n=>digits(n)[0]*digits(n)[1]>k,"product");
+   add(`Mano skaitmenų sandauga mažesnė už ${k}.`,`The product of my digits is less than ${k}.`,n=>digits(n)[0]*digits(n)[1]<k,"product");
+  }
+ }
+ return p;
+}
+function generate(){
+ const all=Array.from({length:90},(_,i)=>i+10);
+ const props=properties(level);
+ // A candidate puzzle is built by choosing five DIFFERENT clue families.
+ // Each clue must eliminate at least one of the ten numbers, and the last
+ // clue must leave exactly one. No fallback puzzle is reused.
+ for(let attempt=0;attempt<45000;attempt++){
+  const target=all[rand(0,all.length-1)];
+  const candidates=shuffle([...shuffle(all.filter(n=>n!==target)).slice(0,9),target]);
+  let remaining=candidates.slice(),chosen=[],used=new Set();
+  for(let step=0;step<5;step++){
+   const options=shuffle(props).filter(p=>p.test(target)&&!used.has(p.kind)&&remaining.some(n=>!p.test(n)))
+    .map(p=>({p,kept:remaining.filter(n=>p.test(n))}))
+    .filter(x=>step===4?x.kept.length===1:x.kept.length>=6-step&&x.kept.length<remaining.length);
+   if(!options.length)break;
+   const ideal=[8,6,4,2,1][step];
+   options.sort((a,b)=>Math.abs(a.kept.length-ideal)-Math.abs(b.kept.length-ideal));
+   const pick=options[rand(0,Math.min(3,options.length-1))];
+   chosen.push(pick.p);used.add(pick.p.kind);remaining=pick.kept;
+  }
+  if(chosen.length!==5||remaining.length!==1)continue;
+  if(level===4&&!chosen.some(c=>["product","digit_difference","reversal"].includes(c.kind)))continue;
+  const key=[level,[...candidates].sort((a,b)=>a-b).join(","),chosen.map(c=>c.text).join("|")].join("::");
+  if(history.has(key))continue;
+  history.add(key);
+  return {target,candidates,clues:chosen};
+ }
+ throw new Error("Nepavyko sugeneruoti naujo galvosūkio. Bandykite dar kartą.");
+}
+
+let clueMode="one",finalState="";
+function render(){
+ const t=translations[lang],shown=clueMode==="all"?5:visible;
+ $("#levelDesc").textContent=t.descs[level-1];
+ $("#progress").textContent=clueMode==="all"?(lang==="lt"?"Visos 5 užuominos":"All 5 clues"):(lang==="lt"?`Užuomina ${visible} iš 5`:`Clue ${visible} of 5`);
+ // Five fixed slots prevent the number grid from jumping when clues are revealed.
+ $("#clues").innerHTML=puzzle.clues.map((c,i)=>i<shown?`<div class="clue ${clueMode==="one"&&i===visible-1?"current":""}"><strong>${t.clue} ${i+1}</strong>${translateClue(c.text)}</div>`:`<div class="clue placeholder"><strong>${t.clue} ${i+1} · …</strong></div>`).join("");
+ const remaining=puzzle.candidates.filter(n=>!crossed.has(n));
+ $("#numbers").innerHTML=puzzle.candidates.map(n=>{
+ const cls=crossed.has(n)?"crossed":remaining.length===1&&remaining[0]===n?(n===puzzle.target?"correct":"incorrect"):"";
+ return `<button type="button" class="number ${cls}" data-num="${n}" aria-pressed="${crossed.has(n)}">${n}</button>`;
+ }).join("");
+ $("#numbers").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+ if(solved)return;
+ const n=Number(b.dataset.num);crossed.has(n)?crossed.delete(n):crossed.add(n);
+ const rem=puzzle.candidates.filter(x=>!crossed.has(x));
+ const feedback=$("#feedback");feedback.textContent="";feedback.className="feedback";
+ if(rem.length===1){
+ if(rem[0]===puzzle.target){solved=true;feedback.className="feedback good";feedback.textContent=translations[lang].win(puzzle.target);}
+ else{feedback.className="feedback bad";feedback.textContent=lang==="lt"?"Likęs skaičius neteisingas. Gali grąžinti išbrauktus skaičius ir bandyti dar kartą.":"That is not the mystery number. Restore crossed-out numbers and try again.";}
+ }
+ render();
+ });
+ $("#nextClue").style.display=clueMode==="all"?"none":"";
+ $("#nextClue").disabled=visible===5||solved;
+ $("#check").disabled=solved;
+}
+function newGame(){puzzle=generate();visible=1;crossed=new Set();solved=false;$("#feedback").textContent="";$("#feedback").className="feedback";render()}
+$("#check").onclick=()=>{
+ const shown=clueMode==="all"?5:visible;
+ const allowed=puzzle.candidates.filter(n=>puzzle.clues.slice(0,shown).every(c=>c.test(n)));
+ const wrong=allowed.some(n=>crossed.has(n)),missed=puzzle.candidates.some(n=>!allowed.includes(n)&&!crossed.has(n));
+ const f=$("#feedback");
+ if(wrong||missed){f.className="feedback bad";f.textContent=wrong?translations[lang].wrong:translations[lang].missed;return;}
+ if(allowed.length===1){solved=true;f.className="feedback good";f.textContent=translations[lang].win(puzzle.target);}
+ else{f.className="feedback good";f.textContent=translations[lang].correct;}
+ render();
+};
+$("#nextClue").onclick=()=>{if(visible<5){visible++;$("#feedback").textContent="";$("#feedback").className="feedback";render()}};
+$("#newGame").onclick=newGame;
+$("#levelSelect").onchange=e=>{level=Number(e.target.value);newGame()};
+document.querySelectorAll('input[name="clueMode"]').forEach(r=>r.onchange=()=>{clueMode=document.querySelector('input[name="clueMode"]:checked').value;$("#feedback").textContent="";$("#feedback").className="feedback";render()});
+function printPage(){
+ const en=lang==="en",t=translations[lang];
+ const header=`<div class="print-top"><span>GALIUISMOKTI.LT</span><div class="fields"><span>${en?"Name":"Vardas"} <span class="line"></span></span><span>${en?"Date":"Data"} <span class="line"></span></span></div></div>`;
+ const footer='<div class="print-footer"><span>Galiu išmokti!</span><span>galiuismokti.lt</span></div>';
+ const title=`<div class="print-title">${en?"MYSTERY NUMBER":"PASLAPTINGASIS SKAIČIUS"}</div><div class="print-sub">${en?"Level":"Lygis"} ${level} · ${t.descs[level-1]}</div>`;
+ const clues=`<div class="print-section">${en?"Clues":"Užuominos"}</div><p class="print-instruction">${en?"Read the clues and cross out numbers that do not fit.":"Perskaityk užuominas ir išbrauk netinkamus skaičius."}</p><ol class="print-clues">${puzzle.clues.map(c=>`<li>${translateClue(c.text)}</li>`).join("")}</ol>`;
+ const nums=`<div class="print-section">${en?"Numbers":"Skaičiai"}</div><div class="print-numbers">${puzzle.candidates.map(n=>`<div class="print-num">${n}</div>`).join("")}</div>`;
+ let html=`<div>${header}${title}${clues}${nums}${footer}</div>`;
+ if($("#printAnswers").checked)html+=`<div class="answer-sheet">${header}${title}<div class="print-section">${en?"Answer sheet":"Atsakymų lapas"}</div><p>${en?"Mystery number":"Paslaptingasis skaičius"}: <strong>${puzzle.target}</strong></p><ol class="print-clues">${puzzle.clues.map(c=>`<li>${translateClue(c.text)}</li>`).join("")}</ol>${footer}</div>`;
+ $("#printDocument").innerHTML=html;
+ window.print();
+}
+$("#print").onclick=printPage;
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;$("#feedback").textContent="";$("#feedback").className="feedback";updateLanguage()});
+newGame();updateLanguage();
+</script></body></html>
