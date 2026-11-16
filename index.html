@@ -30,6 +30,16 @@
     .art.logic{background:linear-gradient(135deg,#dff7ed,#e6efff)}
     .art.english{background:linear-gradient(135deg,#e0edff,#f1e5ff)}
     .art.schemes{background:linear-gradient(135deg,#e6f5ff,#eee5ff)}
+    .art.multiply{background:linear-gradient(135deg,#dff8f5,#fff0ce)}
+    .multiply-art{display:flex;align-items:center;gap:20px;transform:rotate(-5deg)}
+    .multiply-equation{background:#fff;border:2px solid #a2d8ce;border-radius:20px;padding:18px 22px;font-size:2.7rem;font-weight:900;color:#257d78;box-shadow:0 7px 15px #257d7820}
+    .multiply-icon{font-size:4.2rem}
+    .tag.multiply-tag{background:#e1f7f2;color:#247b73}
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+    .filter{font:inherit;cursor:pointer;border:1px solid #dce4f5;background:white;color:#52627f;border-radius:99px;padding:10px 17px;font-weight:750;min-height:44px}
+    .filter:hover{border-color:#6484d5}.filter:focus-visible{outline:3px solid #f1a45e;outline-offset:2px}
+    .filter.active{background:#4567d1;color:white;border-color:#4567d1}
+    .card[hidden]{display:none}
     .schemes-art{display:flex;align-items:center;gap:18px;transform:rotate(-4deg)}
     .scheme-card{background:white;border:2px solid #b7c7eb;border-radius:17px;padding:14px 18px;box-shadow:0 7px 15px #536aa528;display:flex;flex-direction:column;gap:8px;align-items:center}
     .scheme-bar{width:125px;height:35px;display:flex;border:3px solid #637cc5;border-radius:5px;overflow:hidden}
@@ -83,6 +93,12 @@
     </section>
     <section aria-labelledby="games-title">
       <div class="section-head"><h2 id="games-title">🧩 Žaidimų erdvė</h2></div>
+      <div class="filters" role="group" aria-label="Filtruoti žaidimus pagal dalyką">
+        <button class="filter active" type="button" data-filter="visi" aria-pressed="true">Visi (8)</button>
+        <button class="filter" type="button" data-filter="matematika" aria-pressed="false">🔢 Matematika (5)</button>
+        <button class="filter" type="button" data-filter="kalbos" aria-pressed="false">🌍 Kalbos (2)</button>
+        <button class="filter" type="button" data-filter="logika" aria-pressed="false">🧠 Logika (1)</button>
+      </div>
       <div class="cards" id="cards">
         <article class="card" data-category="matematika">
           <div class="art math" aria-hidden="true"><div class="mini-grid"><span>8</span><span>1</span><span>6</span><span>3</span><span>5</span><span>7</span><span>4</span><span>9</span><span>2</span></div></div>
@@ -92,7 +108,7 @@
           <div class="art signs" aria-hidden="true"><div class="sign-example"><span>17</span><span class="missing">?</span><span>21</span><span class="missing">?</span><span>9</span><span>= 29</span></div></div>
           <div class="card-body"><span class="tag">➕ Matematika</span><h3>Pabėgę veiksmų ženklai</h3><p>Surask dingusius sudėties ir atimties ženklus, kad lygybė būtų teisinga!</p><a class="action" href="zaidimai/pabege-veiksmu-zenklai/">🎮 Žaisti</a></div>
         </article>
-        <article class="card" data-category="ispanu-kalba">
+        <article class="card" data-category="kalbos">
           <div class="art spanish" aria-hidden="true"><div class="spanish-art"><span class="spanish-flag">🇪🇸</span><span class="speech">¡Hola! 👋</span></div></div>
           <div class="card-body"><span class="tag spanish-tag">🇪🇸 Ispanų kalba</span><h3>¡Vamos a jugar!</h3><p>Mokykis ispaniškų žodžių žaisdamas: klausyk, spėk, ieškok porų ir kartok pasirinktas temas!</p><a class="action" href="zaidimai/ispanu-zodziai/">🎮 Žaisti</a></div>
         </article>
@@ -100,7 +116,7 @@
           <div class="art logic" aria-hidden="true"><div class="logic-art"><span class="logic-icon">🕵️</span><div class="logic-grid"><span>✓</span><span></span><span class="no">×</span><span class="no">×</span><span>✓</span><span></span><span></span><span class="no">×</span><span>✓</span></div></div></div>
           <div class="card-body"><span class="tag logic-tag">🔎 Logika</span><h3>Loginiai detektyvai</h3><p>Skaityk užuominas, ieškok ryšių ir atskleisk paslaptis detektyvo lentelėje!</p><a class="action" href="zaidimai/loginiai-detektyvai/">🎮 Žaisti</a></div>
         </article>
-        <article class="card" data-category="anglu-kalba">
+        <article class="card" data-category="kalbos">
           <div class="art english" aria-hidden="true"><div class="english-art"><span class="english-flag">🇬🇧</span><span class="english-speech">Hello! 🔊</span></div></div>
           <div class="card-body"><span class="tag english-tag">🇬🇧 Anglų kalba</span><h3>Anglų kalbos žodynas</h3><p>Mokykis angliškų žodžių: klausyk tarimo, atpažink paveikslėlius, dėliok raides ir rašyk!</p><a class="action" href="zaidimai/angluk-zodziai/">🎮 Žaisti</a></div>
         </article>
@@ -111,6 +127,10 @@
         <article class="card" data-category="matematika">
           <div class="art schemes" aria-hidden="true"><div class="schemes-art"><div class="scheme-card"><div class="scheme-question">? + 8 = 15</div><div class="scheme-bar"><span></span><span></span></div></div><span class="scheme-pencil">✏️</span></div></div>
           <div class="card-body"><span class="tag schemes-tag">📐 Matematika</span><h3>Uždavinių schemos</h3><p>Skaityk tekstinius uždavinius, atpažink tinkamą schemą ir mokykis spręsti! Gali atsispausdinti užduočių lapą.</p><a class="action" href="zaidimai/schemos/">🎮 Žaisti</a></div>
+        </article>
+        <article class="card" data-category="matematika">
+          <div class="art multiply" aria-hidden="true"><div class="multiply-art"><span class="multiply-equation">3 × 4 = ?</span><span class="multiply-icon">⭐</span></div></div>
+          <div class="card-body"><span class="tag multiply-tag">✖️ Matematika</span><h3>Daugybos nuotykiai</h3><p>Lavink daugybos įgūdžius žaisdamas ir įveik vis naujus iššūkius!</p><a class="action" href="zaidimai/daugyba/">🎮 Žaisti</a></div>
         </article>
       </div>
     </section>
@@ -124,6 +144,19 @@
       </div>
     </div>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const filters = document.querySelectorAll('.filter');
+    const cards = document.querySelectorAll('#cards .card');
+    filters.forEach(button => button.addEventListener('click', () => {
+      const category = button.dataset.filter;
+      filters.forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      cards.forEach(card => { card.hidden = category !== 'visi' && card.dataset.category !== category; });
+    }));
+  </script>
 </body>
 </html>
